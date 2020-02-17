@@ -167,10 +167,10 @@ aov_ez(dv = "RT",
 Practice materials are available on Datacamp and on RStudio.cloud!
 
 .pull-left[
-![:scale 95%](../images/Datacamp_.png)
+![:scale 95%](images/Datacamp_.png)
 ]
 .pull-right[
-![:scale 50%](../images/rstudio-primers.png)
+![:scale 50%](images/rstudio-primers.png)
 ]
 
 ---
