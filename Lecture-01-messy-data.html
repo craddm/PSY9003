@@ -22,8 +22,6 @@ class: center, middle, inverse, title-slide
 
 # Topics previously covered
 
-.large[
-
 - Data visualization
     - Using **ggplot2**
     
@@ -34,20 +32,16 @@ class: center, middle, inverse, title-slide
     - t-tests, correlations
     - regression
     - ANOVA
-]
 
 ---
 # Themes for today
 
 .pull-left[
-.large[
 - Refamiliarizing yourself with R
 
 - Basic data transformations
 
 - Missing data
-]
-
 ]
 .pull-right[
 ![:scale 70%](images/RStudioCloud_proj_circ.png)
@@ -65,32 +59,33 @@ Join the class workspace on RStudio.cloud.
 ---
 # Tabular data
 
-Tables of data are what you're most commonly dealing with in R.
 .pull-left[
 
 ```
 ## # A tibble: 16 x 4
 ##    Participant Viewpoint Block     RT
 ##          &lt;int&gt; &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt;
-##  1           1 Different First   463.
-##  2           1 Different Second  403.
-##  3           1 Same      First   568.
-##  4           1 Same      Second  386.
-##  5           2 Different First   534.
-##  6           2 Different Second  349.
-##  7           2 Same      First   521.
-##  8           2 Same      Second  423.
-##  9           3 Different First   463.
-## 10           3 Different Second  371.
-## 11           3 Same      First   503.
-## 12           3 Same      Second  320.
-## 13           4 Different First   525.
-## 14           4 Different Second  456.
-## 15           4 Same      First   517.
-## 16           4 Same      Second  352.
+##  1           1 Different First   461.
+##  2           1 Different Second  450.
+##  3           1 Same      First   441.
+##  4           1 Same      Second  486.
+##  5           2 Different First   448.
+##  6           2 Different Second  411.
+##  7           2 Same      First   544.
+##  8           2 Same      Second  437.
+##  9           3 Different First   482.
+## 10           3 Different Second  342.
+## 11           3 Same      First   496.
+## 12           3 Same      Second  443.
+## 13           4 Different First   516.
+## 14           4 Different Second  486.
+## 15           4 Same      First   571.
+## 16           4 Same      Second  331.
 ```
 ]
 .pull-right[
+Tables of data are what you're most commonly dealing with in R.
+
 This one confirms to the **tidy data** principles:
 
 One row per observation, one column per variable
@@ -100,8 +95,6 @@ One row per observation, one column per variable
 
 ---
 # Different types of file
-
-Data comes in many different shapes, sizes, and formats.
 
 The most common file formats you'll deal with are either Excel files or text files, but you may also find dealing with SPSS files useful.
 
@@ -118,17 +111,18 @@ Fortunately, R has several functions and packages for importing data!
 background-image: url(../images/dplyr-logo.png)
 background-size: 6%
 background-position: 90% 5%
-# The five verbs of dplyr
+# Data wrangling
 
 **dplyr** is a really useful package for manipulation of data tables.
 
 |Function |Effect|
 |------------|----|
-| filter()   |Include or exclude observations (rows)|
 | select()   |Include or exclude variables (columns)|
-| mutate()   |Create new variables (columns)|
-| summarise()|Aggregate or summarise groups of observations (rows)|
 | arrange()  |Change the order of observations (rows)|
+| filter()   |Include or exclude observations (rows)|
+| mutate()   |Create new variables (columns)|
+| group_by() |Create groups of observations|
+| summarise()|Aggregate or summarise groups of observations (rows)|
 
 ---
 background-image: url(../images/ggplot2-logo.png)
@@ -136,10 +130,10 @@ background-size: 8%
 background-position: 85% 5%
 # Quickly plotting your data
 
-Getting plots of your data can be really important, for all aspects of data analysis.
+.pull-left[
+Plottting data is really important for all aspects of data analysis.
 
 The **ggplot2** package provides a framework for doing this:
-.pull-left[
 
 ```r
 ggplot(example_rt_df,
@@ -167,13 +161,13 @@ t.test(RT~Block, data = example_rt_df)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  RT by Block
-## t = 15.318, df = 196.82, p-value &lt; 2.2e-16
+## t = 15.025, df = 197.04, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   81.56221 105.66648
+##   84.19059 109.63009
 ## sample estimates:
 ##  mean in group First mean in group Second 
-##             498.2280             404.6136
+##             499.9386             403.0283
 ```
 
 ---
@@ -194,9 +188,9 @@ aov_ez(dv = "RT",
 ## 
 ## Response: RT
 ##            Effect    df     MSE          F  ges p.value
-## 1           Block 1, 49 1825.04 240.09 ***  .55  &lt;.0001
-## 2       Viewpoint 1, 49 1844.75       0.67 .003     .42
-## 3 Block:Viewpoint 1, 49 2152.41     3.05 +  .02     .09
+## 1           Block 1, 49 2313.97 202.93 ***  .53  &lt;.0001
+## 2       Viewpoint 1, 49 2197.22       0.71 .004     .40
+## 3 Block:Viewpoint 1, 49 1644.91       0.38 .002     .54
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -228,14 +222,14 @@ In an ideal world all our data would be beautifully normal:
 ---
 # The real data
 
-But reality is rarely so kind. Data can be all kinds of messy. There can be *outliers*...
+But reality is rarely so kind. Data can be all kinds of messy. It can have *outliers*...
 
 ![](Lecture-01-messy-data_files/figure-html/outlier-plot-1.png)&lt;!-- --&gt;
 
 ---
 # The real data
 
-There can be *missing data*...
+Data can be *missing*...
 .pull-left[
 ![](Lecture-01-messy-data_files/figure-html/missing-plot-1.png)&lt;!-- --&gt;
 ]
@@ -243,16 +237,16 @@ There can be *missing data*...
 
 ```
 ##           X1        X2
-## 1         NA  9.618020
-## 2         NA  9.097863
-## 3         NA 10.163832
-## 4         NA 11.844794
-## 5         NA 10.643324
-## 6   9.145622        NA
-## 7  10.490015        NA
-## 8   9.665701  8.012127
-## 9  10.471191 10.500247
-## 10 11.322193  9.926605
+## 1         NA  9.359846
+## 2         NA 10.049630
+## 3         NA 11.152546
+## 4         NA 10.152801
+## 5         NA  9.170977
+## 6   9.994661        NA
+## 7   8.737582        NA
+## 8  10.031553  8.265186
+## 9  10.460927 12.280524
+## 10 10.741676 10.130999
 ```
 Complete cases = 193
 ]
@@ -260,7 +254,7 @@ Complete cases = 193
 ---
 # The real data
 
-Data can *skewed*...
+Data can be *skewed*...
 
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 
@@ -269,14 +263,12 @@ Data can *skewed*...
 
 
 .pull-left[
-There can be any combination of these things...
-
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-.large[
+There can be any combination of these things...
+
 All of these pose problems for estimating the properties of our data, the relationships between our variables, and the phenomena we are investigating.
-]
 ]
 
 ---
@@ -286,62 +278,107 @@ class: center, inverse, middle
 ---
 # What is an outlier?
 
-.pull-left[
-.large[
-Unusual observations that lie outside the typical range of the data.
-
-The data in the figure on the right-hand side was generated with a correlation coefficient (r) of .2.
-
 Two out of the 200 pairs of x-y values were replaced. 
 
-The resulting coefficient (approx r = .5) is *way-off* the true coefficient for these data. 
-]
-]
+The resulting coefficient (approx *r* = .49) is *way-off* the true coefficient for these data. 
 
-.pull-right[
+.pull-left[
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 ]
 
 ---
 # What is an outlier?
 
 .pull-left[
-.large[
 The problem gets even worse with smaller sample sizes.
 
 Here there are 50 datapoints with two outliers, rather than 200.
 
 The correlation coefficient becomes even *more* biased than it was previously.
-
-And outliers can *skew* the distribution of the data, causing problems with many standard parametric tests.
-]
 ]
 
 .pull-right[
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 ---
-# What should we do about them?
+# What should we do with outliers?
 
-There are three typical strategies.
+Three common approaches:
 
-1. Remove them.
-    - If you're really sure these reflect an error and not genuine data, then removal is a possibility. 
-    - For example, if somebody's age was written down as 1800 years old, you can be resonably sure it's a mistake.
-    - Sometimes cutoffs are used (e.g. anything more than 3 standard deviations above the mean is removed)
+1. **Remove them**
+    
+    - If you're sure these reflect an error, not genuine data, then removal is a possibility. 
 
-2. Replace them.
-    - Common approaches involve replacing the outliers with values of the mean of the distribution + or - 2 or 3 standard deviations. 
+--
+2. **Transformation**
+    
+    - *rescaling* or *transforming* your data may help reduce the influence of outliers. (We'll come back to this!)
 
-3. Transform the data
-    - There are a variety of different ways you can *rescale* or *transform* your data that may help reduce the influence of outliers. (We'll come back to this!)
+--
+3. **Replace them**
+    
+    - Replacing the outliers with values `\(\pm\)` 2-3 standard deviations away from the mean. 
+
+
+---
+class: center, inverse, middle
+# Identifying and replacing outliers
+
+---
+# Identifying outliers
+
+Plotting your data can be an excellent way to spot outliers: here they're *very* obvious!
+
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+---
+# Identifying outliers
+
+Plotting the residuals of your linear model will also help you identify troublesome observations.
+
+```r
+plot(lm(X1 ~ X2, data = temp_df_out))
+```
+.pull-left[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+]
+
+---
+# Identifying outliers
+
+Plotting the residuals of your linear model will also help you identify troublesome observations.
+.pull-left[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+]
+
+---
+# Identifying outliers
+
+.pull-left[
+Sometimes a *threshold* is used to determine whether an observation is an outlier.
+
+Sometimes this is driven by common sense: e.g. a value of 120 for a participant's age is **extremely** unlikely to be genuine.
+
+Sometimes this is *data-driven*: e.g. values more than `\(\pm\)` 3 standard deviations away from the mean are *unusual*.
+]
+.pull-right[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
 
 ---
 # Removing values above a threshold
 
 The **filter()** function from dplyr can be used to remove outliers easily!
-
 .pull-left[
 
 ```r
@@ -352,99 +389,79 @@ temp_df_out %&gt;%
   stat_smooth(method = "lm")
 ```
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 
 ```r
 temp_df_out %&gt;%
-  filter(X1 &lt; 15) %&gt;%
+  dplyr::filter(X1 &lt; 15) %&gt;%
   ggplot(aes(x = X1, y = X2)) + 
   geom_point() + theme_bw() + 
   stat_smooth(method = "lm")
 ```
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
 ]
-
----
-# Removing values above a threshold
-
-One way to check which values lie several standard deviations away from the mean is to **scale** them. 
-
-
-```r
-temp_df_out %&gt;%
-  mutate(X1_scaled = scale(X1),
-         X2_scaled = scale(X2)) %&gt;%
-  head()
-```
-
-```
-##          X1        X2   X1_scaled    X2_scaled
-## 1 10.068983  9.618020  0.01239077 -0.304621493
-## 2  8.619609  9.097863 -1.26218173 -0.601090306
-## 3  9.538198 10.163832 -0.45437914  0.006469974
-## 4  9.882000 11.844794 -0.15204065  0.964551581
-## 5 10.613554 10.643324  0.49128449  0.279761206
-## 6  9.145622 11.013690 -0.79960852  0.490855276
-```
 
 ---
 # Scaling by the mean and standard deviation
 
-The **scale()** function centres a vector on its mean and *standardizes* it. This technique is used frequently in multiple regression involving *interactions* (i.e. moderation and mediation).
+The **scale()** function centres a numeric vector on its mean and divides it by its standard deviation.
 
 .pull-left[
 
 ```r
-example &lt;- rnorm(10, 0, 2)
-scale(example)
+example &lt;- c(1:6, 12)
+example
 ```
 
 ```
-##              [,1]
-##  [1,] -0.24870192
-##  [2,]  2.41749309
-##  [3,] -0.77289308
-##  [4,] -0.86046553
-##  [5,] -0.14466916
-##  [6,]  0.51256800
-##  [7,] -1.19234192
-##  [8,]  0.17831610
-##  [9,] -0.02481579
-## [10,]  0.13551021
-## attr(,"scaled:center")
-## [1] -0.1147823
-## attr(,"scaled:scale")
-## [1] 2.099488
+## [1]  1  2  3  4  5  6 12
+```
+
+```r
+mean(example)
+```
+
+```
+## [1] 4.714286
+```
+
+```r
+sd(example)
+```
+
+```
+## [1] 3.638419
 ```
 
 ]
 .pull-right[
 
 ```r
-(example - mean(example)) / sd(example)
+scale(example)
 ```
 
 ```
-##              [,1]
-##  [1,] -0.24870192
-##  [2,]  2.41749309
-##  [3,] -0.77289308
-##  [4,] -0.86046553
-##  [5,] -0.14466916
-##  [6,]  0.51256800
-##  [7,] -1.19234192
-##  [8,]  0.17831610
-##  [9,] -0.02481579
-## [10,]  0.13551021
+##             [,1]
+## [1,] -1.02085147
+## [2,] -0.74600684
+## [3,] -0.47116222
+## [4,] -0.19631759
+## [5,]  0.07852704
+## [6,]  0.35337166
+## [7,]  2.00243942
+## attr(,"scaled:center")
+## [1] 4.714286
+## attr(,"scaled:scale")
+## [1] 3.638419
 ```
 ]
 
 ---
 class: center, inverse, middle
-# Handling skew
+# Data transformation
 
 ---
 # Skewed data
@@ -453,14 +470,14 @@ Skewed data is data that *leans* in a particular direction.
 
 These are often described by the direction of the "long-tail" - so a left-skewed distribution means a distribution with long tail on the left, rather than most values on the left.
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 
 ---
 # Skewed data
 
-A plot of some randomly generated data suggest that it is right-tailed. This is sometimes called *positively skewed*. For this type of data, the mean (blue line) is higher than the median (red, dashed line).
+This data is *right-tailed*. This is sometimes also called *positively skewed*. For this type of data, the mean (blue line) is usually higher than the median (red, dashed line).
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
 
 ---
 # Transformation of skewed data
@@ -479,68 +496,30 @@ Reciprocal | 1 / X|
 
 The different transformations each have different effects on the data, but the general pattern is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution.
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 
 ---
 # Left-tailed skew
 
-Suppose instead that the data is skewed the opposite way - many high scores but few low scores. Thus it has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is lower than the median (red dashed line).
+Suppose instead that the data is skewed the opposite way - many high scores but few low scores. Thus it has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is usually less than the median (red dashed line).
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 
 ---
 # Transformations on left-tailed data
 
 The transformations aren't as effective on left-tailed data.
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 
 ---
 class: center, inverse, middle
 # Handling missing data
 
 ---
-# "Not Available"
-
-The value NA is code for `Not Available` or Missing Values.
-
-.pull-left[
-
-```r
-head(temp_df_missing)
-```
-
-```
-##         X1        X2
-## 1       NA  9.618020
-## 2       NA  9.097863
-## 3       NA 10.163832
-## 4       NA 11.844794
-## 5       NA 10.643324
-## 6 9.145622        NA
-```
-]
-.pull-right[
-
-```r
-summary(temp_df_missing)
-```
-
-```
-##        X1               X2        
-##  Min.   : 7.913   Min.   : 7.484  
-##  1st Qu.: 9.247   1st Qu.: 9.346  
-##  Median : 9.921   Median : 9.923  
-##  Mean   :10.007   Mean   : 9.988  
-##  3rd Qu.:10.731   3rd Qu.:10.684  
-##  Max.   :12.749   Max.   :12.748  
-##  NA's   :5        NA's   :2
-```
-]
-
----
 # Types of missing data
 
+.pull-left[
 - Missing Completely At Random
     - Missingness does not depend on anything
 
@@ -549,104 +528,100 @@ summary(temp_df_missing)
 
 - Missing Not At Random
     - Missingness depends on the missing data
-    
+]
+.pull-right[
+&lt;blockquote class="twitter-tweet"&gt;&lt;p lang="en" dir="ltr"&gt;In today&amp;#39;s lecture, I tried to redefine missing data types (MCAR, MAR, MNAR) as different reasons a dog might eat your homework. This needs more work, but audience seemed to appreciate it. &lt;a href="https://t.co/i9Z8sYrqWQ"&gt;pic.twitter.com/i9Z8sYrqWQ&lt;/a&gt;&lt;/p&gt;&amp;mdash; Richard McElreath (@rlmcelreath) &lt;a href="https://twitter.com/rlmcelreath/status/1101435108995805185?ref_src=twsrc%5Etfw"&gt;March 1, 2019&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+]
+
 ---
 # Missing Completely At Random
 
-.large[
+.pull-left[
 If you have missing data, MCAR is the best kind of missing data. 
 
 There is nothing *systematic* about which data is missing. 
 
 For example, all your participants filled out three different questionnaires. Unfortunately, your dog chewed through a pile of them, and half of your participants now have only two questionnaires.
-
+]
+.pull-right[
 
 ```
 ##           X1        X2       X3
-## 1         NA  8.363639 12.87384
-## 2         NA  8.716530 13.13819
-## 3         NA  8.650749 12.00096
-## 4         NA  7.008244 11.92816
-## 5         NA  8.769866 13.11874
-## 6   8.043710  7.718381 11.49757
-## 7   8.509693  8.961639 14.25681
-## 8  10.129448  8.026027 12.33597
-## 9  10.768680 10.277243 12.85749
-## 10  9.566236  8.442825 13.59101
+## 1         NA 11.196406 14.79229
+## 2         NA 11.032400 13.54228
+## 3         NA  9.465687 13.37474
+## 4         NA  9.575922 11.50504
+## 5         NA  9.561335 13.76051
+## 6   9.639409  7.802743 11.69513
+## 7   8.932981  8.455864 11.81588
+## 8   8.464169  8.048474 12.04659
+## 9  10.089711  8.164292 12.95979
+## 10  7.689520  7.649908 12.41753
 ```
-
 ]
 
 ---
 # Missing At Random
 
-.large[
-Confusingly, Missing At Random (MAR) data is not missing (completely) at random. 
-
-For example, suppose that you collected three questionnaires from participants with a range of ages. However, for some reason, people older than 21 typically failed to complete the third questionnaire.
-]
 .pull-left[
 
 ```
 ##           X1        X2       X3 age
-## 1  11.651105  9.518931       NA  27
-## 2  10.033351  9.221380 13.43645  19
-## 3  10.888774 10.624280 12.12624  20
-## 4  11.588641  9.854123 13.90698  21
-## 5  11.908065 10.299019 13.74007  19
-## 6  10.307966  8.876722 14.19419  20
-## 7  11.635592  9.618311 12.97212  19
-## 8  12.105255  9.311169 14.27289  19
-## 9   8.640482  8.779324 12.07427  20
-## 10 11.519957  9.835838 13.93611  20
+## 1  10.126691  7.001005 14.57775  21
+## 2   9.235539  9.007883 12.40115  18
+## 3   8.991263  9.262714 12.04716  19
+## 4   8.570443 10.343828       NA  41
+## 5  11.097006  9.979701 14.29012  21
+## 6  10.017708  7.838293 12.54091  19
+## 7  10.245453  8.855108       NA  26
+## 8   9.642139  7.557774 12.71528  20
+## 9   9.688923  9.708304 13.27871  20
+## 10  8.755107 10.227644 12.56583  18
 ```
 ]
 .pull-right[
-In this case, the failure to complete the third questionnaire is not related to the responses on the third questionnaire: it is not the case, for example, that people who would have high scores on this questionnaire typically do not complete it. 
+Confusingly, Missing At Random (MAR) data is not missing (completely) at random. 
 
-So this data is MAR - whether the data in the third column is missing is related to the value of the fourth column.
+For example, for some reason, people older than 21 typically failed to complete the third questionnaire.
+
+This data is MAR - whether the data in the third column is missing is related to the value of the fourth column.
 ]
 
 ---
 # Missing Not At Random
 
-The final, most troubling type of missing data is data that is Missing Not At Random (MNAR).
-
 .pull-left[
 
 ```
 ##           X1        X2       X3 age
-## 1  12.114458 10.642141 11.68152  57
-## 2   8.760333 11.007995 10.70211  19
-## 3   9.052558  8.417058       NA  54
-## 4   9.516465  9.651446 12.13409  20
-## 5  10.833602  8.359537       NA  19
-## 6  11.229031  9.559748 12.90250  21
-## 7  12.161446  9.185338       NA  19
-## 8  10.590100  8.838578 13.41192  27
-## 9  10.227131  9.234052       NA  20
-## 10  8.813638  8.430096 12.97554  19
+## 1   9.808337  9.661388 11.31347  19
+## 2  10.657878  8.851631       NA  20
+## 3  11.007144  8.629325 13.24104  18
+## 4  11.560772  9.475498       NA  19
+## 5  10.649922  9.626114 11.07477  19
+## 6  10.439654  9.168500 13.01352  20
+## 7   9.041356  7.680485 12.45972  21
+## 8  11.083638 10.103680 12.77056  18
+## 9  10.882921 10.115725       NA  20
+## 10 10.002461  8.518686 13.16951  21
 ```
 ]
 .pull-right[
+The final, most troubling type of missing data is data that is Missing Not At Random (MNAR).
+
+For example, imagine that the questionnaire relates to depression; people who score high for depression are less likely to complete the final questionnaire.
+
 In this case, the values that are missing for the third questionnaire depends on the value of the responses to that questionnaire, so this data is MNAR.
-
-For example, imagine that the questionnaire relates to depression; people who score high for depression are less likely to complete the questionnaire.
-
 ]
-
 
 ---
 # Simple methods of dealing with missing data
 
-.large[
 List-wise deletion: Cases with missing data are completely **removed** from **all** analysis.
 
 Pair-wise deletion: Cases with missing data are only **removed** from **comparisons where one or more variables are missing**.
 
-Many R functions have built-in methods of dealing with missing values that enforce the methods.
-
-You'll have encountered this before - by default, functions such as **mean()** return NA if any value in the input is NA/missing.
+Many R functions have built-in methods of dealing with missing values that enforce the methods. By default, functions such as **mean()** return NA if any value in the input is NA/missing.
 
 
 ```r
@@ -662,15 +637,15 @@ mean(temp_df_missing$X1, na.rm = TRUE)
 ```
 
 ```
-## [1] 10.00655
+## [1] 10.02602
 ```
-]
+
 
 ---
 # Problems with deletion
 
-Deletion can be wasteful. A lot of data is just thrown out. In addition, if the data is Missing Not At Random, this can introduce a lot of bias, since the data is not representative of the full range of the variable of interest!
-
+.pull-left[Deletion can be wasteful. A lot of data is just thrown out. In addition, if the data is Missing Not At Random, this can introduce a lot of bias, since the data is not representative of the full range of the variable of interest!]
+.pull-right[
 ![](Lecture-01-messy-data_files/figure-html/final_cors-1.png)&lt;!-- --&gt;
 
 ```
@@ -681,6 +656,7 @@ Deletion can be wasteful. A lot of data is just thrown out. In addition, if the 
 ## 11   0  1  1  1
 ##     11 11 21 43
 ```
+]
 
 ---
 # Imputation
@@ -700,13 +676,12 @@ Packages such as **mice** and **Amelia** can do this for us.
 ---
 # Alternative approaches to missing data, skew, and other oddities
 
-.large[
 Generalized Linear Models (as opposed to General Linear Models) allow modelling of data of many different types without necessitating transformations. For example, counts can be modelled using Poisson regression, and categorical outcomes with logistic regression.
 
 Multilevel, hierarchial models can handle all of these things and much more besides; they are perfectly capable of handling missing data.
 
 We'll cover both of these later in the course.
-]
+
 
 ---
 # Next week
@@ -724,6 +699,7 @@ http://dx.doi.org/10.1037/0033-2909.112.1.155
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script src="js/macros.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
 "highlightLines": true,

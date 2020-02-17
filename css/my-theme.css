@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway|Lato&display=swap);
 .title-slide {
   background-image: url('../images/University of Lincoln_logo_General White Landscape.png');
   background-size: 40%;
@@ -20,31 +21,16 @@
   padding-left: 1%;
 }
 
+body { 
+  font-family: 'Lato', sans-serif; 
+}
+
+h1, h2, h3 {
+  font-family: 'Raleway', sans-serif;
+  font-weight: medium;
+}
+
 .remark-slide-content {
-    font-size: 30px;
+    font-size: 24px;
     padding: 1em 4em 1em 4em;
-}
-
-.red {
-  color: red;
-}
-
-.orange{
-  color: #FEBC38;
-}
-
-.brown{
-  color: #F6893D;
-}
-
-.yellow{
-  color: yellow;
-}
-
-.blue{
-  color: blue;
-}
-
-.green{
-  color: green;
 }
