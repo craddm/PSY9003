@@ -65,22 +65,22 @@ Join the class workspace on RStudio.cloud.
 ## # A tibble: 16 x 4
 ##    Participant Viewpoint Block     RT
 ##          &lt;int&gt; &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt;
-##  1           1 Different First   461.
-##  2           1 Different Second  450.
-##  3           1 Same      First   441.
-##  4           1 Same      Second  486.
-##  5           2 Different First   448.
-##  6           2 Different Second  411.
-##  7           2 Same      First   544.
-##  8           2 Same      Second  437.
-##  9           3 Different First   482.
-## 10           3 Different Second  342.
-## 11           3 Same      First   496.
-## 12           3 Same      Second  443.
-## 13           4 Different First   516.
-## 14           4 Different Second  486.
-## 15           4 Same      First   571.
-## 16           4 Same      Second  331.
+##  1           1 Different First   505.
+##  2           1 Different Second  451.
+##  3           1 Same      First   469.
+##  4           1 Same      Second  482.
+##  5           2 Different First   574.
+##  6           2 Different Second  365.
+##  7           2 Same      First   462.
+##  8           2 Same      Second  388.
+##  9           3 Different First   578.
+## 10           3 Different Second  402.
+## 11           3 Same      First   553.
+## 12           3 Same      Second  411.
+## 13           4 Different First   560.
+## 14           4 Different Second  376.
+## 15           4 Same      First   472.
+## 16           4 Same      Second  394.
 ```
 ]
 .pull-right[
@@ -161,13 +161,13 @@ t.test(RT~Block, data = example_rt_df)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  RT by Block
-## t = 15.025, df = 197.04, p-value &lt; 2.2e-16
+## t = 15.903, df = 190.76, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   84.19059 109.63009
+##   86.2677 110.6969
 ## sample estimates:
 ##  mean in group First mean in group Second 
-##             499.9386             403.0283
+##             502.2756             403.7933
 ```
 
 ---
@@ -187,10 +187,10 @@ aov_ez(dv = "RT",
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: RT
-##            Effect    df     MSE          F  ges p.value
-## 1           Block 1, 49 2313.97 202.93 ***  .53  &lt;.0001
-## 2       Viewpoint 1, 49 2197.22       0.71 .004     .40
-## 3 Block:Viewpoint 1, 49 1644.91       0.38 .002     .54
+##            Effect    df     MSE          F   ges p.value
+## 1           Block 1, 49 2285.87 212.15 ***   .56  &lt;.0001
+## 2       Viewpoint 1, 49 2188.61       1.46  .008     .23
+## 3 Block:Viewpoint 1, 49 1161.32       0.05 .0001     .83
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -201,10 +201,10 @@ aov_ez(dv = "RT",
 Practice materials are available on Datacamp and on RStudio.cloud!
 
 .pull-left[
-![:scale 95%](../images/Datacamp_.png)
+![:scale 95%](images/Datacamp_.png)
 ]
 .pull-right[
-![:scale 50%](../images/rstudio-primers.png)
+![:scale 50%](images/rstudio-primers.png)
 ]
 
 ---
@@ -237,16 +237,16 @@ Data can be *missing*...
 
 ```
 ##           X1        X2
-## 1         NA  9.359846
-## 2         NA 10.049630
-## 3         NA 11.152546
-## 4         NA 10.152801
-## 5         NA  9.170977
-## 6   9.994661        NA
-## 7   8.737582        NA
-## 8  10.031553  8.265186
-## 9  10.460927 12.280524
-## 10 10.741676 10.130999
+## 1         NA  9.695420
+## 2         NA  9.621483
+## 3         NA 10.723804
+## 4         NA 10.386785
+## 5         NA  7.815597
+## 6   9.376787        NA
+## 7  10.182705        NA
+## 8   9.466135 11.174322
+## 9  11.053890 10.538513
+## 10  9.179338  7.334967
 ```
 Complete cases = 193
 ]
@@ -268,7 +268,7 @@ Data can be *skewed*...
 .pull-right[
 There can be any combination of these things...
 
-All of these pose problems for estimating the properties of our data, the relationships between our variables, and the phenomena we are investigating.
+All of these pose problems for estimating the properties of our data, the relationships between variables, and the phenomena we are investigating.
 ]
 
 ---
@@ -469,20 +469,37 @@ class: center, inverse, middle
 Skewed data is data that *leans* in a particular direction. 
 
 These are often described by the direction of the "long-tail" - so a left-skewed distribution means a distribution with long tail on the left, rather than most values on the left.
-
+.center[
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
 
 ---
 # Skewed data
 
+.pull-left[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+.pull-right[
 This data is *right-tailed*. This is sometimes also called *positively skewed*. For this type of data, the mean (blue line) is usually higher than the median (red, dashed line).
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+This type of skew is relatively common with data that is *bounded* at zero. e.g. reaction time data, the distribution of wages 
+]
+
+---
+# Left-tailed skew
+
+.pull-left[
+![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+Data skewed the opposite way - many high scores but few low scores - has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is usually less than the median (red dashed line).
+]
+
 
 ---
 # Transformation of skewed data
 
-One way to handle this kind of skew is to transform the data onto a different *scale*.
+One way to handle skew is to transform the data to a different *scale*.
 
 Transformation type| code|
 -------|---|
@@ -496,21 +513,17 @@ Reciprocal | 1 / X|
 
 The different transformations each have different effects on the data, but the general pattern is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution.
 
-![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
-
----
-# Left-tailed skew
-
-Suppose instead that the data is skewed the opposite way - many high scores but few low scores. Thus it has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is usually less than the median (red dashed line).
-
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
 
 ---
 # Transformations on left-tailed data
 
 The transformations aren't as effective on left-tailed data.
 
+.center[
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+]
 
 ---
 class: center, inverse, middle
@@ -547,16 +560,16 @@ For example, all your participants filled out three different questionnaires. Un
 
 ```
 ##           X1        X2       X3
-## 1         NA 11.196406 14.79229
-## 2         NA 11.032400 13.54228
-## 3         NA  9.465687 13.37474
-## 4         NA  9.575922 11.50504
-## 5         NA  9.561335 13.76051
-## 6   9.639409  7.802743 11.69513
-## 7   8.932981  8.455864 11.81588
-## 8   8.464169  8.048474 12.04659
-## 9  10.089711  8.164292 12.95979
-## 10  7.689520  7.649908 12.41753
+## 1         NA 10.576818 14.13549
+## 2         NA  8.387305 11.94744
+## 3         NA  9.826288 11.21480
+## 4         NA 10.293933 12.47408
+## 5         NA 10.577984 13.65410
+## 6   9.470200 10.443275 13.45557
+## 7  10.489298  8.246108 13.69352
+## 8   8.563670  8.531161 11.85204
+## 9  10.841521  9.653558 12.73267
+## 10  9.340633  9.811812 12.06431
 ```
 ]
 
@@ -567,16 +580,16 @@ For example, all your participants filled out three different questionnaires. Un
 
 ```
 ##           X1        X2       X3 age
-## 1  10.126691  7.001005 14.57775  21
-## 2   9.235539  9.007883 12.40115  18
-## 3   8.991263  9.262714 12.04716  19
-## 4   8.570443 10.343828       NA  41
-## 5  11.097006  9.979701 14.29012  21
-## 6  10.017708  7.838293 12.54091  19
-## 7  10.245453  8.855108       NA  26
-## 8   9.642139  7.557774 12.71528  20
-## 9   9.688923  9.708304 13.27871  20
-## 10  8.755107 10.227644 12.56583  18
+## 1  10.860892  7.607152 12.66804  18
+## 2  10.990725  7.356898 13.83641  18
+## 3  11.045681  7.666954 12.59257  18
+## 4   9.774002  8.564610 13.60880  19
+## 5  10.360665 10.041196 10.93219  18
+## 6  10.249814 10.335564 11.67593  20
+## 7   9.065221  9.980548 14.50280  20
+## 8  10.360480  9.494207 13.28086  18
+## 9  10.396769  9.113957 14.04823  19
+## 10  9.392164  9.427506 13.32674  18
 ```
 ]
 .pull-right[
@@ -593,17 +606,17 @@ This data is MAR - whether the data in the third column is missing is related to
 .pull-left[
 
 ```
-##           X1        X2       X3 age
-## 1   9.808337  9.661388 11.31347  19
-## 2  10.657878  8.851631       NA  20
-## 3  11.007144  8.629325 13.24104  18
-## 4  11.560772  9.475498       NA  19
-## 5  10.649922  9.626114 11.07477  19
-## 6  10.439654  9.168500 13.01352  20
-## 7   9.041356  7.680485 12.45972  21
-## 8  11.083638 10.103680 12.77056  18
-## 9  10.882921 10.115725       NA  20
-## 10 10.002461  8.518686 13.16951  21
+##           X1        X2        X3 age
+## 1  10.079248 11.096381 11.773827  19
+## 2   9.750598  8.639340        NA  20
+## 3   8.907270  9.060809 12.434749  41
+## 4   9.984428  8.856411        NA  20
+## 5  10.567424  9.868629        NA  19
+## 6  10.174461  9.572152 12.670256  19
+## 7   9.571016  6.903336 11.407531  18
+## 8   8.069565  9.560714  9.810957  19
+## 9   9.001742  8.576938 11.538140  20
+## 10 10.385438  7.406013 13.236939  34
 ```
 ]
 .pull-right[
@@ -617,12 +630,14 @@ In this case, the values that are missing for the third questionnaire depends on
 ---
 # Simple methods of dealing with missing data
 
+.pull-left[
 List-wise deletion: Cases with missing data are completely **removed** from **all** analysis.
 
 Pair-wise deletion: Cases with missing data are only **removed** from **comparisons where one or more variables are missing**.
 
 Many R functions have built-in methods of dealing with missing values that enforce the methods. By default, functions such as **mean()** return NA if any value in the input is NA/missing.
-
+]
+.pull-right[
 
 ```r
 mean(temp_df_missing$X1)
@@ -637,25 +652,26 @@ mean(temp_df_missing$X1, na.rm = TRUE)
 ```
 
 ```
-## [1] 10.02602
+## [1] 10.01195
 ```
 
+```r
+sum(complete.cases(temp_df_missing))
+```
+
+```
+## [1] 193
+```
+]
 
 ---
 # Problems with deletion
 
-.pull-left[Deletion can be wasteful. A lot of data is just thrown out. In addition, if the data is Missing Not At Random, this can introduce a lot of bias, since the data is not representative of the full range of the variable of interest!]
-.pull-right[
-![](Lecture-01-messy-data_files/figure-html/final_cors-1.png)&lt;!-- --&gt;
+.pull-left[Deletion can be wasteful, throwing out a lot of otherwise good data.
 
-```
-##     X1 X3 X2   
-## 157  1  1  1  0
-## 21   1  1  0  1
-## 11   1  0  1  1
-## 11   0  1  1  1
-##     11 11 21 43
-```
+And if the data is Missing Not At Random, the data is not representative of the full range of the variable of interest!]
+.pull-right[
+
 ]
 
 ---
@@ -663,22 +679,97 @@ mean(temp_df_missing$X1, na.rm = TRUE)
 
 Imputation is a method of "filling-in" missing values with "best-guesses".
 
-## Single Imputation
+### Single Imputation
 Replace missing values with a simple "best-guess". e.g. Using the mean or the median for the condition.
+
+.pull-left[
+
+```r
+orig_data &lt;- 1:12
+orig_data
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10 11 12
+```
+
+```r
+mean(orig_data)
+```
+
+```
+## [1] 6.5
+```
+]
+.pull-right[
+
+```r
+missing_one &lt;- orig_data
+missing_one[6] &lt;- NA
+missing_one
+```
+
+```
+##  [1]  1  2  3  4  5 NA  7  8  9 10 11 12
+```
+
+```r
+mean(missing_one,  na.rm = TRUE)
+```
+
+```
+## [1] 6.545455
+```
+]
+
+---
+# Single Imputation
+
+Replace missing values with a simple "best-guess". e.g. Using the mean or the median for the condition.
+
+.pull-left[
+
+```r
+replace_one &lt;- missing_one
+replace_one[6] &lt;- mean(missing_one, na.rm = TRUE)
+mean(replace_one)
+```
+
+```
+## [1] 6.545455
+```
+
+```r
+mean(orig_data)
+```
+
+```
+## [1] 6.5
+```
+]
 
 Problem: the mean and median are biased by the missing data. And replacing a missing value with one of these values tends to artificially reduce variability.
 
-## Multiple Imputation
-Replace missing values with estimates based on *model* of the data that incorporates uncertainty. We create a model based on the data that is not missing, and use its predictions to guess the values that the missing data has.
+---
 
-Packages such as **mice** and **Amelia** can do this for us.
+## Multiple Imputation
+
+In **multiple** imputation, we replace missing values with estimates based on a *model* of the data that incorporates uncertainty about what the value should be. 
+
+We create a model based on the data that is not missing, and use its predictions to guess the values that the missing data has.
+
+We do this multiple times and then take an average or *pool* the results to fill in the gap.
+
+Packages such as **mice** and **Amelia** can do this for us, and help us identify patterns of missingness.
 
 ---
 # Alternative approaches to missing data, skew, and other oddities
 
-Generalized Linear Models (as opposed to General Linear Models) allow modelling of data of many different types without necessitating transformations. For example, counts can be modelled using Poisson regression, and categorical outcomes with logistic regression.
+Generalized Linear Models (as opposed to General Linear Models) allow modelling of data of many different types without necessitating transformations. 
 
-Multilevel, hierarchial models can handle all of these things and much more besides; they are perfectly capable of handling missing data.
+For example, counts can be modelled using Poisson regression, and categorical outcomes can be modelled with logistic regression.
+
+*Multilevel* or *mixed*-models can handle all of these things and much more besides; they are perfectly capable of handling missing data.
 
 We'll cover both of these later in the course.
 
