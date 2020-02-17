@@ -65,22 +65,22 @@ Join the class workspace on RStudio.cloud.
 ## # A tibble: 16 x 4
 ##    Participant Viewpoint Block     RT
 ##          &lt;int&gt; &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt;
-##  1           1 Different First   505.
-##  2           1 Different Second  451.
-##  3           1 Same      First   469.
-##  4           1 Same      Second  482.
-##  5           2 Different First   574.
-##  6           2 Different Second  365.
-##  7           2 Same      First   462.
-##  8           2 Same      Second  388.
-##  9           3 Different First   578.
-## 10           3 Different Second  402.
-## 11           3 Same      First   553.
-## 12           3 Same      Second  411.
-## 13           4 Different First   560.
-## 14           4 Different Second  376.
-## 15           4 Same      First   472.
-## 16           4 Same      Second  394.
+##  1           1 Different First   440.
+##  2           1 Different Second  440.
+##  3           1 Same      First   461.
+##  4           1 Same      Second  378.
+##  5           2 Different First   553.
+##  6           2 Different Second  362.
+##  7           2 Same      First   588.
+##  8           2 Same      Second  308.
+##  9           3 Different First   554.
+## 10           3 Different Second  378.
+## 11           3 Same      First   497.
+## 12           3 Same      Second  393.
+## 13           4 Different First   605.
+## 14           4 Different Second  337.
+## 15           4 Same      First   505.
+## 16           4 Same      Second  481.
 ```
 ]
 .pull-right[
@@ -161,13 +161,13 @@ t.test(RT~Block, data = example_rt_df)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  RT by Block
-## t = 15.903, df = 190.76, p-value &lt; 2.2e-16
+## t = 17.945, df = 192.83, p-value &lt; 2.2e-16
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##   86.2677 110.6969
+##   99.84277 124.49988
 ## sample estimates:
 ##  mean in group First mean in group Second 
-##             502.2756             403.7933
+##             508.7604             396.5891
 ```
 
 ---
@@ -187,10 +187,10 @@ aov_ez(dv = "RT",
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: RT
-##            Effect    df     MSE          F   ges p.value
-## 1           Block 1, 49 2285.87 212.15 ***   .56  &lt;.0001
-## 2       Viewpoint 1, 49 2188.61       1.46  .008     .23
-## 3 Block:Viewpoint 1, 49 1161.32       0.05 .0001     .83
+##            Effect    df     MSE          F    ges p.value
+## 1           Block 1, 49 1837.04 342.46 ***    .62  &lt;.0001
+## 2       Viewpoint 1, 49 1744.11       0.01 &lt;.0001     .92
+## 3 Block:Viewpoint 1, 49 2406.41       0.60   .004     .44
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -237,16 +237,16 @@ Data can be *missing*...
 
 ```
 ##           X1        X2
-## 1         NA  9.695420
-## 2         NA  9.621483
-## 3         NA 10.723804
-## 4         NA 10.386785
-## 5         NA  7.815597
-## 6   9.376787        NA
-## 7  10.182705        NA
-## 8   9.466135 11.174322
-## 9  11.053890 10.538513
-## 10  9.179338  7.334967
+## 1         NA  7.488500
+## 2         NA 10.586179
+## 3         NA 11.387960
+## 4         NA  6.895894
+## 5         NA 13.008935
+## 6   8.744998        NA
+## 7  10.090868        NA
+## 8   9.394213  9.043452
+## 9  10.014256 10.034693
+## 10  9.294777  9.518317
 ```
 Complete cases = 193
 ]
@@ -511,17 +511,13 @@ Reciprocal | 1 / X|
 ---
 # Transformation of skewed data
 
-The different transformations each have different effects on the data, but the general pattern is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution.
+The different transformations each have different effects on the data, but the general pattern on right-tailed data is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution. The transformations aren't as effective on left-tailed data.
 
+Moral: consider alternatives to transformations... (see later!)
+.pull-left[
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
-
-
----
-# Transformations on left-tailed data
-
-The transformations aren't as effective on left-tailed data.
-
-.center[
+]
+.pull-right[
 ![](Lecture-01-messy-data_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
 ]
 
@@ -560,16 +556,16 @@ For example, all your participants filled out three different questionnaires. Un
 
 ```
 ##           X1        X2       X3
-## 1         NA 10.576818 14.13549
-## 2         NA  8.387305 11.94744
-## 3         NA  9.826288 11.21480
-## 4         NA 10.293933 12.47408
-## 5         NA 10.577984 13.65410
-## 6   9.470200 10.443275 13.45557
-## 7  10.489298  8.246108 13.69352
-## 8   8.563670  8.531161 11.85204
-## 9  10.841521  9.653558 12.73267
-## 10  9.340633  9.811812 12.06431
+## 1         NA  8.876666 12.12049
+## 2         NA  8.643999 10.32451
+## 3         NA  8.659720 12.43256
+## 4         NA 10.804931 12.47942
+## 5         NA  9.336932 15.14802
+## 6  10.335008  8.919503 12.58195
+## 7   9.370765  9.399255 11.84693
+## 8   8.369429  8.824399 14.39454
+## 9   9.990678  8.516881 13.10203
+## 10 10.988883  7.694130 13.98738
 ```
 ]
 
@@ -580,16 +576,16 @@ For example, all your participants filled out three different questionnaires. Un
 
 ```
 ##           X1        X2       X3 age
-## 1  10.860892  7.607152 12.66804  18
-## 2  10.990725  7.356898 13.83641  18
-## 3  11.045681  7.666954 12.59257  18
-## 4   9.774002  8.564610 13.60880  19
-## 5  10.360665 10.041196 10.93219  18
-## 6  10.249814 10.335564 11.67593  20
-## 7   9.065221  9.980548 14.50280  20
-## 8  10.360480  9.494207 13.28086  18
-## 9  10.396769  9.113957 14.04823  19
-## 10  9.392164  9.427506 13.32674  18
+## 1  10.811026  9.330420       NA  55
+## 2   8.187208  9.377605 12.46555  19
+## 3   8.967636  7.951374 11.03670  19
+## 4  10.438743  7.572869 12.49227  19
+## 5   9.562463  8.610711 13.85732  21
+## 6  11.262023  9.094062 11.69346  20
+## 7   9.134838  8.441877 12.34938  18
+## 8   9.519009  9.533933 14.26666  21
+## 9  11.032269 10.744527 14.48707  20
+## 10  9.644013  9.239952 12.02963  21
 ```
 ]
 .pull-right[
@@ -606,17 +602,17 @@ This data is MAR - whether the data in the third column is missing is related to
 .pull-left[
 
 ```
-##           X1        X2        X3 age
-## 1  10.079248 11.096381 11.773827  19
-## 2   9.750598  8.639340        NA  20
-## 3   8.907270  9.060809 12.434749  41
-## 4   9.984428  8.856411        NA  20
-## 5  10.567424  9.868629        NA  19
-## 6  10.174461  9.572152 12.670256  19
-## 7   9.571016  6.903336 11.407531  18
-## 8   8.069565  9.560714  9.810957  19
-## 9   9.001742  8.576938 11.538140  20
-## 10 10.385438  7.406013 13.236939  34
+##           X1        X2       X3 age
+## 1  13.292053 11.187397       NA  18
+## 2  10.402303  7.208469 13.06662  21
+## 3   8.444334 10.681243 13.03315  20
+## 4   9.776708  9.831171       NA  19
+## 5   8.052205  6.698294 13.11379  21
+## 6  10.008199  8.412695 12.74497  20
+## 7  10.622796 10.992266 12.29959  20
+## 8   9.587762  8.434222 12.75297  19
+## 9  10.206192  8.332482 13.40576  18
+## 10 10.037463  9.430422       NA  54
 ```
 ]
 .pull-right[
@@ -652,7 +648,7 @@ mean(temp_df_missing$X1, na.rm = TRUE)
 ```
 
 ```
-## [1] 10.01195
+## [1] 9.977449
 ```
 
 ```r
@@ -662,16 +658,6 @@ sum(complete.cases(temp_df_missing))
 ```
 ## [1] 193
 ```
-]
-
----
-# Problems with deletion
-
-.pull-left[Deletion can be wasteful, throwing out a lot of otherwise good data.
-
-And if the data is Missing Not At Random, the data is not representative of the full range of the variable of interest!]
-.pull-right[
-
 ]
 
 ---

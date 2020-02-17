@@ -313,7 +313,7 @@ temp_df_all %>%
 .pull-right[
 There can be any combination of these things...
 
-All of these pose problems for estimating the properties of our data, the relationships between our variables, and the phenomena we are investigating.
+All of these pose problems for estimating the properties of our data, the relationships between variables, and the phenomena we are investigating.
 ]
 
 ---
@@ -513,7 +513,7 @@ class: center, inverse, middle
 Skewed data is data that *leans* in a particular direction. 
 
 These are often described by the direction of the "long-tail" - so a left-skewed distribution means a distribution with long tail on the left, rather than most values on the left.
-
+.center[
 ```{r fig.height=5, echo = FALSE}
 temp_df_skew <- data.frame(`Left-tailed` = -rgamma(100, 2, 1),
                            `Normal` = rnorm(100, 0, 2), 
@@ -525,12 +525,12 @@ temp_df_skew %>%
   geom_histogram(bins = 20) +
   facet_wrap(~group) + theme_bw() 
 ```
+]
 
 ---
 # Skewed data
 
-This data is *right-tailed*. This is sometimes also called *positively skewed*. For this type of data, the mean (blue line) is usually higher than the median (red, dashed line).
-
+.pull-left[
 ```{r echo = FALSE, fig.height=5}
 skewed_dat <- rgamma(100, 2, 1)
 qplot(skewed_dat, bins = 20) +
@@ -538,12 +538,37 @@ qplot(skewed_dat, bins = 20) +
              colour = "blue") +
   geom_vline(xintercept = median(skewed_dat),
              colour = "red", linetype = "dashed")
+left_skew <- skewed_dat
 ```
+]
+.pull-right[
+This data is *right-tailed*. This is sometimes also called *positively skewed*. For this type of data, the mean (blue line) is usually higher than the median (red, dashed line).
+
+This type of skew is relatively common with data that is *bounded* at zero. e.g. reaction time data, the distribution of wages 
+]
+
+---
+# Left-tailed skew
+
+.pull-left[
+```{r echo = FALSE, fig.height = 5}
+skewed_dat <- rgamma(100, 2, 1)
+skewed_dat <- max(skewed_dat) + 1 - skewed_dat
+qplot(skewed_dat, bins = 20) +
+  geom_vline(xintercept = mean(skewed_dat), colour = "blue") +
+  geom_vline(xintercept = median(skewed_dat), colour = "red", linetype = "dashed")
+right_skew <- skewed_dat
+```
+]
+.pull-right[
+Data skewed the opposite way - many high scores but few low scores - has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is usually less than the median (red dashed line).
+]
+
 
 ---
 # Transformation of skewed data
 
-One way to handle this kind of skew is to transform the data onto a different *scale*.
+One way to handle skew is to transform the data to a different *scale*.
 
 Transformation type| code|
 -------|---|
@@ -555,49 +580,35 @@ Reciprocal | 1 / X|
 ---
 # Transformation of skewed data
 
-The different transformations each have different effects on the data, but the general pattern is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution.
+The different transformations each have different effects on the data, but the general pattern on right-tailed data is that they (mostly) reduce the skew, bringing extreme values closer to the centre of the distribution. The transformations aren't as effective on left-tailed data.
 
+Moral: consider alternatives to transformations... (see later!)
+.pull-left[
 ```{r fig.height=5, echo = FALSE}
-data.frame(original = skewed_dat,
-           log = log(skewed_dat),
-           `square root` = sqrt(skewed_dat),
-           reciprocal = 1 / skewed_dat) %>%
+data.frame(original = left_skew,
+           log = log(left_skew),
+           `square root` = sqrt(left_skew),
+           reciprocal = 1 / left_skew) %>%
   gather(transform, results) %>%
   ggplot(aes(x = results)) +
   geom_histogram(bins = 20) +
   facet_wrap(~transform, scales = "free") + 
   theme_bw()
 ```
-
----
-# Left-tailed skew
-
-Suppose instead that the data is skewed the opposite way - many high scores but few low scores. Thus it has a long *left* tail. This is also called *negative skew*. The mean (blue solid line) is usually less than the median (red dashed line).
-
-```{r echo = FALSE, fig.height = 5}
-skewed_dat <- rgamma(100, 2, 1)
-skewed_dat <- max(skewed_dat) + 1 - skewed_dat
-qplot(skewed_dat, bins = 20) +
-  geom_vline(xintercept = mean(skewed_dat), colour = "blue") +
-  geom_vline(xintercept = median(skewed_dat), colour = "red", linetype = "dashed")
-```
-
----
-# Transformations on left-tailed data
-
-The transformations aren't as effective on left-tailed data.
-
+]
+.pull-right[
 ```{r echo = FALSE, fig.height=5}
-data.frame(original = skewed_dat,
-           log = log(skewed_dat),
-           `square root` = sqrt(skewed_dat),
-           reciprocal = 1 / skewed_dat) %>%
+data.frame(original = right_skew,
+           log = log(right_skew),
+           `square root` = sqrt(right_skew),
+           reciprocal = 1 / right_skew) %>%
   gather(transform, results) %>%
   ggplot(aes(x = results)) +
   geom_histogram(bins = 20) +
   facet_wrap(~transform, scales = "free") + 
   theme_bw()
 ```
+]
 
 ---
 class: center, inverse, middle
@@ -706,38 +717,18 @@ In this case, the values that are missing for the third questionnaire depends on
 ---
 # Simple methods of dealing with missing data
 
+.pull-left[
 List-wise deletion: Cases with missing data are completely **removed** from **all** analysis.
 
 Pair-wise deletion: Cases with missing data are only **removed** from **comparisons where one or more variables are missing**.
 
 Many R functions have built-in methods of dealing with missing values that enforce the methods. By default, functions such as **mean()** return NA if any value in the input is NA/missing.
-
+]
+.pull-right[
 ```{r}
 mean(temp_df_missing$X1)
 mean(temp_df_missing$X1, na.rm = TRUE)
-```
-
-
----
-# Problems with deletion
-
-.pull-left[Deletion can be wasteful, throwing out a lot of otherwise good data.
-
-And if the data is Missing Not At Random, the data is not representative of the full range of the variable of interest!]
-.pull-right[
-```{r final_cors, echo  = FALSE, fig.height = 5}
-three_vars <- 
-  data.frame(MASS::mvrnorm(200,
-                           c(10, 9, 13),
-                           matrix(c(1, 0.2, 0.3,
-                                    0.2, 1, 0.2,
-                                    0.3, 0.2, 1),
-                                  3, 3),
-                           empirical = TRUE))
-three_vars[50:60, 1] <- NA
-three_vars[90:110, 2] <- NA
-three_vars[140:150, 3] <- NA
-#mice::md.pattern(three_vars)
+sum(complete.cases(temp_df_missing))
 ```
 ]
 
@@ -746,24 +737,62 @@ three_vars[140:150, 3] <- NA
 
 Imputation is a method of "filling-in" missing values with "best-guesses".
 
-## Single Imputation
+### Single Imputation
 Replace missing values with a simple "best-guess". e.g. Using the mean or the median for the condition.
+
+.pull-left[
+```{r}
+orig_data <- 1:12
+orig_data
+mean(orig_data)
+```
+]
+.pull-right[
+```{r}
+missing_one <- orig_data
+missing_one[6] <- NA
+missing_one
+mean(missing_one,  na.rm = TRUE)
+```
+]
+
+---
+# Single Imputation
+
+Replace missing values with a simple "best-guess". e.g. Using the mean or the median for the condition.
+
+.pull-left[
+```{r}
+replace_one <- missing_one
+replace_one[6] <- mean(missing_one, na.rm = TRUE)
+mean(replace_one)
+
+mean(orig_data)
+```
+]
 
 Problem: the mean and median are biased by the missing data. And replacing a missing value with one of these values tends to artificially reduce variability.
 
 ---
 
 ## Multiple Imputation
-Replace missing values with estimates based on *model* of the data that incorporates uncertainty. We create a model based on the data that is not missing, and use its predictions to guess the values that the missing data has.
 
-Packages such as **mice** and **Amelia** can do this for us.
+In **multiple** imputation, we replace missing values with estimates based on a *model* of the data that incorporates uncertainty about what the value should be. 
+
+We create a model based on the data that is not missing, and use its predictions to guess the values that the missing data has.
+
+We do this multiple times and then take an average or *pool* the results to fill in the gap.
+
+Packages such as **mice** and **Amelia** can do this for us, and help us identify patterns of missingness.
 
 ---
 # Alternative approaches to missing data, skew, and other oddities
 
-Generalized Linear Models (as opposed to General Linear Models) allow modelling of data of many different types without necessitating transformations. For example, counts can be modelled using Poisson regression, and categorical outcomes with logistic regression.
+Generalized Linear Models (as opposed to General Linear Models) allow modelling of data of many different types without necessitating transformations. 
 
-Multilevel, hierarchial models can handle all of these things and much more besides; they are perfectly capable of handling missing data.
+For example, counts can be modelled using Poisson regression, and categorical outcomes can be modelled with logistic regression.
+
+*Multilevel* or *mixed*-models can handle all of these things and much more besides; they are perfectly capable of handling missing data.
 
 We'll cover both of these later in the course.
 
