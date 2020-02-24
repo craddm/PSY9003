@@ -23,10 +23,10 @@ class: center, middle, inverse
 # Replicability and reproducibility in psychology
 
 ---
-background-image: url(../images/headlines-repro.png)
+background-image: url(images/headlines-repro.png)
 
 ---
-background-image: url(../images/F1.large.jpg)
+background-image: url(images/F1.large.jpg)
 background-size: contain
 
 ---
@@ -84,7 +84,7 @@ Does a significant effect tell us how likely it is our experimental hypothesis -
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 
 .pull-right[
@@ -101,7 +101,7 @@ Does a non-significant effect tell us that there is no effect, or that our hypot
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 .pull-right[
 1) A non-significant effect only tells us that we **failed to reject** the null hypothesis.
@@ -201,7 +201,7 @@ Approx 320 tests are significant - a true-positive rate of .32, and a false-nega
 ]
 
 ---
-background-image: url(../images/Type1vsType2.jpg)
+background-image: url(images/Type1vsType2.jpg)
 
 ---
 class: inverse, center, middle
@@ -216,7 +216,7 @@ Also termed *beta*, or $\beta$, power is the probability of getting a significan
 
 By convention, psychological studies aim for **80% power**.
 
-![](../images/cohen-quote.png)
+![](images/cohen-quote.png)
 
 ---
 # Statistical power and sample size
@@ -388,7 +388,7 @@ How **big** the effect is?
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 .pull-right[
 P-values tell us *absolutely nothing* about the size of the effect.
@@ -404,7 +404,7 @@ How **important** the effect is?
 
 --
 .pull-left[
-![:scale 70%](../images/Still-NO.jpg)
+![:scale 70%](images/Still-NO.jpg)
 ]
 .pull-right[
 A tiny p-value does not mean the effect is any way *important*.
@@ -436,7 +436,7 @@ Easy to understand and interpret.
 e.g. Usain Bolt ran .12 seconds faster than Yohan Blake.
 ]
 .pull-right[
-![:scale 110%](../images/100m_results_focus.jpg)
+![:scale 110%](images/100m_results_focus.jpg)
 ]
 
 ---
@@ -504,16 +504,16 @@ t.test(a, b)
 
 ---
 # The Facebook study
-![:scale 150%](../images/facebook-article.png)
+![:scale 150%](images/facebook-article.png)
 ---
 # The Facebook study
 
-![:scale 150%](../images/facebook-quote.png)
+![:scale 150%](images/facebook-quote.png)
 
 ---
 # The Facebook study
 
-![:scale 150%](../images/facebook-quote-highlight.png)
+![:scale 150%](images/facebook-quote-highlight.png)
 .large[
 P = .007, *d* = .001. This is an absolutely **tiny** effect size.
 
@@ -685,7 +685,7 @@ class: inverse, center, middle
 # So what *does* the p-value tell us?
 
 ---
-background-image: url(../images/DrakeMeme.jpg)
+background-image: url(images/DrakeMeme.jpg)
 
 
 ---

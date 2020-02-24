@@ -24,10 +24,10 @@ class: center, middle, inverse
 # Replicability and reproducibility in psychology
 
 ---
-background-image: url(../images/headlines-repro.png)
+background-image: url(images/headlines-repro.png)
 
 ---
-background-image: url(../images/F1.large.jpg)
+background-image: url(images/F1.large.jpg)
 background-size: contain
 
 ---
@@ -69,13 +69,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -6.7196, df = 95.053, p-value = 1.338e-09
+## t = -3.6041, df = 97.936, p-value = 0.0004945
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.6266187 -0.8846816
+##  -1.0605961 -0.3073724
 ## sample estimates:
-##   mean of x   mean of y 
-## -0.09189134  1.16375879
+## mean of x mean of y 
+## 0.2140856 0.8980699
 ```
 
 ---
@@ -100,7 +100,7 @@ Does a significant effect tell us how likely it is our experimental hypothesis -
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 
 .pull-right[
@@ -117,7 +117,7 @@ Does a non-significant effect tell us that there is no effect, or that our hypot
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 .pull-right[
 1) A non-significant effect only tells us that we **failed to reject** the null hypothesis.
@@ -154,7 +154,7 @@ In other words, setting `\(\alpha\)` at .05 means we accept a **false positive r
 # The false-positive rate
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
@@ -171,7 +171,7 @@ Approx 5% of the p-values of these tests were &lt; .05.
 
 When the null hypothesis is false, p-values lower than our threshold become *more likely*. But it's still not certain we'll get a *significant effect*. 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 Here, I simulate data with a mean of 0.15, 1000 times, and test whether it differs from zero.
@@ -180,7 +180,7 @@ Approx 320 tests are significant - a true-positive rate of .32, and a false-nega
 ]
 
 ---
-background-image: url(../images/Type1vsType2.jpg)
+background-image: url(images/Type1vsType2.jpg)
 
 ---
 class: inverse, center, middle
@@ -195,7 +195,7 @@ Also termed *beta*, or `\(\beta\)`, power is the probability of getting a signif
 
 By convention, psychological studies aim for **80% power**.
 
-![](../images/cohen-quote.png)
+![](images/cohen-quote.png)
 
 ---
 # Statistical power and sample size
@@ -203,7 +203,7 @@ By convention, psychological studies aim for **80% power**.
 Sample size is an important factor determining statistical power:
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 Here I simulate the effects of **increasing sample size** on statistical power.
@@ -215,7 +215,7 @@ The **effect size** stays constant - 0.1 difference between means.
 # Statistical power and effect size
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
@@ -230,7 +230,7 @@ Approx 800 tests are significant - a true-positive rate of .80, and thus a stati
 # Statistical power and effect sizes
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/power-curve-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/power-curve-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 In this simulation, the general design of the study stays the same - there are 100 participants, we test against zero with a t-test.
@@ -242,12 +242,12 @@ As the effect size increases, the **power** of the study increases.
 # Statistical power and effect sizes
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 The study has approximately 14.7% power to detect a 0.1 difference in means.
 
-But the study also has approximately 84% power to detect a 0.3 difference in means.
+But the study also has approximately 87.1% power to detect a 0.3 difference in means.
 
 Studies have a **power curve**, not a single *power*.
 ]
@@ -312,7 +312,7 @@ How **big** the effect is?
 --
 
 .pull-left[
-![](../images/GrumpyNo.png)
+![](images/GrumpyNo.png)
 ]
 .pull-right[
 P-values tell us *absolutely nothing* about the size of the effect.
@@ -328,7 +328,7 @@ How **important** the effect is?
 
 --
 .pull-left[
-![:scale 70%](../images/Still-NO.jpg)
+![:scale 70%](images/Still-NO.jpg)
 ]
 .pull-right[
 A tiny p-value does not mean the effect is any way *important*.
@@ -360,7 +360,7 @@ Easy to understand and interpret.
 e.g. Usain Bolt ran .12 seconds faster than Yohan Blake.
 ]
 .pull-right[
-![:scale 110%](../images/100m_results_focus.jpg)
+![:scale 110%](images/100m_results_focus.jpg)
 ]
 
 ---
@@ -425,13 +425,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -6.7196, df = 95.053, p-value = 1.338e-09
+## t = -3.6041, df = 97.936, p-value = 0.0004945
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.6266187 -0.8846816
+##  -1.0605961 -0.3073724
 ## sample estimates:
-##   mean of x   mean of y 
-## -0.09189134  1.16375879
+## mean of x mean of y 
+## 0.2140856 0.8980699
 ```
 
 ```r
@@ -439,7 +439,7 @@ t.test(a, b)
 ```
 
 ```
-## [1] -1.343921
+## [1] -0.7208247
 ```
 
 ---
@@ -449,16 +449,16 @@ t.test(a, b)
 
 ---
 # The Facebook study
-![:scale 150%](../images/facebook-article.png)
+![:scale 150%](images/facebook-article.png)
 ---
 # The Facebook study
 
-![:scale 150%](../images/facebook-quote.png)
+![:scale 150%](images/facebook-quote.png)
 
 ---
 # The Facebook study
 
-![:scale 150%](../images/facebook-quote-highlight.png)
+![:scale 150%](images/facebook-quote-highlight.png)
 .large[
 P = .007, *d* = .001. This is an absolutely **tiny** effect size.
 
@@ -474,7 +474,7 @@ class: inverse, center, middle
 # Guess the correlation
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 --
@@ -489,7 +489,7 @@ class: inverse, center, middle
 # Guess the correlation
 
 .pull-left[
-![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
 
 --
@@ -598,9 +598,9 @@ afex::aov_ez(dv = "RT",
 ## 
 ## Response: RT
 ##            Effect    df     MSE          F  ges p.value
-## 1           Block 1, 49 1854.68 272.26 ***  .57  &lt;.0001
-## 2       Viewpoint 1, 49 1576.56       0.93 .004     .34
-## 3 Block:Viewpoint 1, 49 2435.66       0.40 .003     .53
+## 1           Block 1, 49 1656.83 283.70 ***  .53  &lt;.0001
+## 2       Viewpoint 1, 49 2202.02       2.36  .01     .13
+## 3 Block:Viewpoint 1, 49 2217.42       1.41 .008     .24
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -620,7 +620,7 @@ class: inverse, center, middle
 # So what *does* the p-value tell us?
 
 ---
-background-image: url(../images/DrakeMeme.jpg)
+background-image: url(images/DrakeMeme.jpg)
 
 
 ---
