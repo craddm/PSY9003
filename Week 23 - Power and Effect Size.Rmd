@@ -678,7 +678,7 @@ afex::aov_ez(dv = "RT",
 
 2) Always interpret the effect sizes. Take care of the difference between *statistical* and *practical* significance.
 
-3) Many of the standardized effect sizes are somewhat *interchangeable*, but always try to report the right one for your test (e.g. Cohen's d for t-tests, $r^2$ / adjusted-$r^2$ for regression)
+3) Many of the standardized effect sizes are somewhat *interchangeable*, but always try to report the right one for your test (e.g. Cohen's d for t-tests, $r^2$ / $adjusted-r^2$ for regression)
 
 ---
 class: inverse, center, middle

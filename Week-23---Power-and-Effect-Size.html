@@ -69,13 +69,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -4.9405, df = 97.379, p-value = 3.236e-06
+## t = -6.7196, df = 95.053, p-value = 1.338e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.4710644 -0.6279017
+##  -1.6266187 -0.8846816
 ## sample estimates:
 ##   mean of x   mean of y 
-## -0.06900175  0.98048130
+## -0.09189134  1.16375879
 ```
 
 ---
@@ -154,7 +154,7 @@ In other words, setting `\(\alpha\)` at .05 means we accept a **false positive r
 # The false-positive rate
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
@@ -171,7 +171,7 @@ Approx 5% of the p-values of these tests were &lt; .05.
 
 When the null hypothesis is false, p-values lower than our threshold become *more likely*. But it's still not certain we'll get a *significant effect*. 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 Here, I simulate data with a mean of 0.15, 1000 times, and test whether it differs from zero.
@@ -203,7 +203,7 @@ By convention, psychological studies aim for **80% power**.
 Sample size is an important factor determining statistical power:
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 Here I simulate the effects of **increasing sample size** on statistical power.
@@ -215,7 +215,7 @@ The **effect size** stays constant - 0.1 difference between means.
 # Statistical power and effect size
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
@@ -230,7 +230,7 @@ Approx 800 tests are significant - a true-positive rate of .80, and thus a stati
 # Statistical power and effect sizes
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/power-curve-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/power-curve-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 In this simulation, the general design of the study stays the same - there are 100 participants, we test against zero with a t-test.
@@ -242,12 +242,12 @@ As the effect size increases, the **power** of the study increases.
 # Statistical power and effect sizes
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-The study has approximately 16.6% power to detect a 0.1 difference in means.
+The study has approximately 14.7% power to detect a 0.1 difference in means.
 
-But the study also has approximately 82.3% power to detect a 0.3 difference in means.
+But the study also has approximately 84% power to detect a 0.3 difference in means.
 
 Studies have a **power curve**, not a single *power*.
 ]
@@ -425,13 +425,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -4.9405, df = 97.379, p-value = 3.236e-06
+## t = -6.7196, df = 95.053, p-value = 1.338e-09
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.4710644 -0.6279017
+##  -1.6266187 -0.8846816
 ## sample estimates:
 ##   mean of x   mean of y 
-## -0.06900175  0.98048130
+## -0.09189134  1.16375879
 ```
 
 ```r
@@ -439,7 +439,7 @@ t.test(a, b)
 ```
 
 ```
-## [1] -0.988104
+## [1] -1.343921
 ```
 
 ---
@@ -474,7 +474,7 @@ class: inverse, center, middle
 # Guess the correlation
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 --
@@ -489,7 +489,7 @@ class: inverse, center, middle
 # Guess the correlation
 
 .pull-left[
-![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+![](Week-23---POwer-and-Effect-Size_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
 
 --
@@ -597,10 +597,10 @@ afex::aov_ez(dv = "RT",
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: RT
-##            Effect    df     MSE          F   ges p.value
-## 1           Block 1, 49 1932.10 237.31 ***   .56  &lt;.0001
-## 2       Viewpoint 1, 49 1795.55       0.09 .0005     .77
-## 3 Block:Viewpoint 1, 49 1946.32       0.45  .002     .51
+##            Effect    df     MSE          F  ges p.value
+## 1           Block 1, 49 1854.68 272.26 ***  .57  &lt;.0001
+## 2       Viewpoint 1, 49 1576.56       0.93 .004     .34
+## 3 Block:Viewpoint 1, 49 2435.66       0.40 .003     .53
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -613,7 +613,7 @@ afex::aov_ez(dv = "RT",
 
 2) Always interpret the effect sizes. Take care of the difference between *statistical* and *practical* significance.
 
-3) Many of the standardized effect sizes are somewhat *interchangeable*, but always try to report the right one for your test (e.g. Cohen's d for t-tests, `\(r^2\)` / adjusted-$r^2$ for regression)
+3) Many of the standardized effect sizes are somewhat *interchangeable*, but always try to report the right one for your test (e.g. Cohen's d for t-tests, `\(r^2\)` / `\(adjusted-r^2\)` for regression)
 
 ---
 class: inverse, center, middle
