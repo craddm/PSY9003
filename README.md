@@ -6,5 +6,5 @@ Class consist of two-hour sessions which are a mixture of lectures and practical
 
 [Lecture 1 - Re-intro to R, and messy data](Lecture-01-messy-data.html)
 
-[Week 23 - Power and effect sizes](Week-23---Power-and-Effect-size.html)
+[Week 23 - Power and effect sizes](Week-23---Power-and-Effect-Size.html)
 
