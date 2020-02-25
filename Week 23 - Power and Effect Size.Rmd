@@ -158,7 +158,7 @@ ggplot() +
              linetype = "dashed",
              colour = "red") + 
   labs(x = "P-value",
-       y = "Number of significant tests") +
+       y = "Number of tests") +
   theme(text = element_text(size = 20))
 ```
 ]
@@ -190,7 +190,7 @@ ggplot() +
              linetype = "dashed",
              colour = "red") + 
   labs(x = "P-value",
-       y = "Number of significant tests") +
+       y = "Number of tests") +
   theme(text = element_text(size = 20))
 ```
 ]

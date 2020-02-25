@@ -69,13 +69,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -5.2875, df = 96.591, p-value = 7.705e-07
+## t = -4.8776, df = 96.373, p-value = 4.236e-06
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.4128043 -0.6416112
+##  -1.5209964 -0.6411411
 ## sample estimates:
 ##  mean of x  mean of y 
-## -0.1956339  0.8315739
+## -0.2502535  0.8308152
 ```
 
 ---
@@ -245,9 +245,9 @@ As the effect size increases, the **power** of the study increases.
 ![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-The study has approximately 17.8% power to detect a 0.1 difference in means.
+The study has approximately 15% power to detect a 0.1 difference in means.
 
-But the study also has approximately 84.4% power to detect a 0.3 difference in means.
+But the study also has approximately 83.7% power to detect a 0.3 difference in means.
 
 Studies have a **power curve**, not a single *power*.
 ]
@@ -425,13 +425,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -5.2875, df = 96.591, p-value = 7.705e-07
+## t = -4.8776, df = 96.373, p-value = 4.236e-06
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.4128043 -0.6416112
+##  -1.5209964 -0.6411411
 ## sample estimates:
 ##  mean of x  mean of y 
-## -0.1956339  0.8315739
+## -0.2502535  0.8308152
 ```
 
 ```r
@@ -439,7 +439,7 @@ t.test(a, b)
 ```
 
 ```
-## [1] -1.057495
+## [1] -0.9755233
 ```
 
 ---
@@ -607,9 +607,9 @@ afex::aov_ez(dv = "RT",
 ## 
 ## Response: RT
 ##            Effect    df     MSE          F   ges p.value
-## 1           Block 1, 49 1708.09 284.70 ***   .56  &lt;.0001
-## 2       Viewpoint 1, 49 2338.19       0.02 .0001     .89
-## 3 Block:Viewpoint 1, 49 1793.12       1.77  .008     .19
+## 1           Block 1, 49 2808.17 146.25 ***   .50  &lt;.0001
+## 2       Viewpoint 1, 49 1872.69       0.07 .0003     .79
+## 3 Block:Viewpoint 1, 49 1798.23       1.51  .007     .23
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
