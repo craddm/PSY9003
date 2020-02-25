@@ -69,13 +69,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -3.6041, df = 97.936, p-value = 0.0004945
+## t = -5.2875, df = 96.591, p-value = 7.705e-07
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.0605961 -0.3073724
+##  -1.4128043 -0.6416112
 ## sample estimates:
-## mean of x mean of y 
-## 0.2140856 0.8980699
+##  mean of x  mean of y 
+## -0.1956339  0.8315739
 ```
 
 ---
@@ -245,9 +245,9 @@ As the effect size increases, the **power** of the study increases.
 ![](Week-23---Power-and-Effect-Size_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-The study has approximately 14.7% power to detect a 0.1 difference in means.
+The study has approximately 17.8% power to detect a 0.1 difference in means.
 
-But the study also has approximately 87.1% power to detect a 0.3 difference in means.
+But the study also has approximately 84.4% power to detect a 0.3 difference in means.
 
 Studies have a **power curve**, not a single *power*.
 ]
@@ -425,13 +425,13 @@ t.test(a, b)
 ## 	Welch Two Sample t-test
 ## 
 ## data:  a and b
-## t = -3.6041, df = 97.936, p-value = 0.0004945
+## t = -5.2875, df = 96.591, p-value = 7.705e-07
 ## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
-##  -1.0605961 -0.3073724
+##  -1.4128043 -0.6416112
 ## sample estimates:
-## mean of x mean of y 
-## 0.2140856 0.8980699
+##  mean of x  mean of y 
+## -0.1956339  0.8315739
 ```
 
 ```r
@@ -439,7 +439,7 @@ t.test(a, b)
 ```
 
 ```
-## [1] -0.7208247
+## [1] -1.057495
 ```
 
 ---
@@ -570,7 +570,7 @@ Note - not every possible test and every possible effect size can fit! We'll cov
 |-|-|-|-|
 |d|0.2|0.5|0.8|
 |r|.1|.3|.5|
-| `\(r^2\)`|.1|.9|.25|
+| `\(r^2\)`|.1|.19|.25|
 | `\(\eta^2\)` |.01|.06|.14|
 | `\(\eta^2_p\)` |.01|.09| .25|
 | `\(\eta^2_g\)` |.02|.13|.26|
@@ -594,13 +594,22 @@ afex::aov_ez(dv = "RT",
 ```
 
 ```
+## Registered S3 methods overwritten by 'lme4':
+##   method                          from
+##   cooks.distance.influence.merMod car 
+##   influence.merMod                car 
+##   dfbeta.influence.merMod         car 
+##   dfbetas.influence.merMod        car
+```
+
+```
 ## Anova Table (Type 3 tests)
 ## 
 ## Response: RT
-##            Effect    df     MSE          F  ges p.value
-## 1           Block 1, 49 1656.83 283.70 ***  .53  &lt;.0001
-## 2       Viewpoint 1, 49 2202.02       2.36  .01     .13
-## 3 Block:Viewpoint 1, 49 2217.42       1.41 .008     .24
+##            Effect    df     MSE          F   ges p.value
+## 1           Block 1, 49 1708.09 284.70 ***   .56  &lt;.0001
+## 2       Viewpoint 1, 49 2338.19       0.02 .0001     .89
+## 3 Block:Viewpoint 1, 49 1793.12       1.77  .008     .19
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '+' 0.1 ' ' 1
 ```
@@ -620,7 +629,7 @@ class: inverse, center, middle
 # So what *does* the p-value tell us?
 
 ---
-background-image: url(images/DrakeMeme.jpg)
+background-image: url('images/DrakeMeme.jpg')
 
 
 ---
