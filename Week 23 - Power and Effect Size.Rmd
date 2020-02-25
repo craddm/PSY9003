@@ -685,7 +685,7 @@ class: inverse, center, middle
 # So what *does* the p-value tell us?
 
 ---
-background-image: url('images/DrakeMeme.jpg')
+background-image: url('images/drakememe.jpg')
 
 
 ---
