@@ -8,5 +8,5 @@ Class consist of two-hour sessions which are a mixture of lectures and practical
 
 [Week 23 - Power and effect sizes](Week-23---Power-and-Effect-Size.html)
 
-[Week 25 - Power and effect sizes](Week-25-factor-analysis.html)
+[Week 25 - Factor analysis](Week-25-factor-analysis.html)
 
