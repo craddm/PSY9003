@@ -34,3 +34,27 @@ h1, h2, h3 {
     font-size: 24px;
     padding: 1em 4em 1em 4em;
 }
+
+.red {
+  color: red;
+}
+
+.orange{
+  color: #FEBC38;
+}
+
+.brown{
+  color: #F6893D;
+}
+
+.yellow{
+  color: yellow;
+}
+
+.blue{
+  color: blue;
+}
+
+.green{
+  color: green;
+}
