@@ -11,3 +11,5 @@ Class consist of two-hour sessions which are a mixture of lectures and practical
 [Week 25 - Factor analysis](Week-25-factor-analysis.html)
 
 [Week 26 - Logistic regression](Week-26-generalized-linear-models.html)
+
+[Week 27 - Multilevel models](Week-27-multilevel-modelling.html)
