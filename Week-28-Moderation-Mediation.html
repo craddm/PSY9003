@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Moderation and Mediation</title>
+    <meta charset="utf-8" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css\my-theme.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Moderation and Mediation
+## PSY9003
+### 2020/03/31
+
+---
+
+
+
+
+# Mediation and moderation
+
+In linear regression, we're looking to understand the relationship between 
+*predictors* and *outcomes*.
+.pull-left[
+
+![](Week-28-Moderation-Mediation_files/figure-html/examp-lm-1.png)
+]
+.pull-right[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+
+---
+class: inverse, center, middle
+# Moderation
+
+---
+# Moderation 
+
+Moderation changes the strength of the relationship between the predictor and dependent variable. 
+.center[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
+]
+
+---
+# Moderation
+.center[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+
+---
+# The *epi.bfi* dataset
+
+The `epi.bfi` dataset from the `psychTools` package
+
+
+```r
+head(epi.bfi)
+```
+
+```
+##   epiE epiS epiImp epilie epiNeur bfagree bfcon bfext bfneur bfopen bdi
+## 1   18   10      7      3       9     138    96   141     51    138   1
+## 2   16    8      5      1      12     101    99   107    116    132   7
+## 3    6    1      3      2       5     143   118    38     68     90   4
+## 4   12    6      4      3      15     104   106    64    114    101   8
+## 5   14    6      5      3       2     115   102   103     86    118   8
+## 6    6    4      2      5      15     110   113    61     54    149   5
+##   traitanx stateanx
+## 1       24       22
+## 2       41       40
+## 3       37       44
+## 4       54       40
+## 5       39       67
+## 6       51       38
+```
+
+---
+# Simple linear regression
+
+Suppose that we want to model `bdi` (Beck Depression Inventory) as a function of `stateanx` (State Anxiety)
+
+
+```r
+st_bdi &lt;- lm(bdi ~ stateanx, data = epi.bfi)
+summary(st_bdi)
+```
+
+```
+## 
+## Call:
+## lm(formula = bdi ~ stateanx, data = epi.bfi)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.1115  -3.0603  -0.6826   2.2152  15.1130 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -5.41988    1.09322  -4.958 1.39e-06 ***
+## stateanx     0.30614    0.02637  11.611  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.592 on 229 degrees of freedom
+## Multiple R-squared:  0.3706,	Adjusted R-squared:  0.3678 
+## F-statistic: 134.8 on 1 and 229 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Multiple linear regression
+
+An additional predictor that we may find interesting is `epiNeur` - a measure of *neuroticism* from the *Eysenck Personality Inventory*. We can add this to make a *multiple* regression model.
+
+
+```r
+st_neu &lt;- lm(bdi ~ stateanx + epiNeur, data = epi.bfi)
+summary(st_neu)
+```
+
+```
+## 
+## Call:
+## lm(formula = bdi ~ stateanx + epiNeur, data = epi.bfi)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.7405 -2.5748 -0.5299  2.2841 11.7303 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -6.32655    1.01061  -6.260 1.89e-09 ***
+## stateanx     0.21526    0.02770   7.770 2.66e-13 ***
+## epiNeur      0.43492    0.06493   6.698 1.63e-10 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.207 on 228 degrees of freedom
+## Multiple R-squared:  0.4741,	Adjusted R-squared:  0.4694 
+## F-statistic: 102.8 on 2 and 228 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Adding interaction terms
+
+What if the effect of `stateanx` depends on the level of `epiNeur`? For example, people who score high on *neuroticism* might be more affected by *state anxiety* than people who are low on *neuroticism*. 
+
+We add both main effects and interactions by using `*` instead of `+`
+
+Thus, `stateanx * epiNeur` will give us the main effect of `stateanx`, the main effect of `epiNeur`, and the interaction between the two.
+
+
+```r
+int_model &lt;- lm(bdi ~ stateanx * epiNeur, data = epi.bfi)
+```
+
+---
+
+
+```r
+summary(int_model)
+```
+
+```
+## 
+## Call:
+## lm(formula = bdi ~ stateanx * epiNeur, data = epi.bfi)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -12.0493  -2.2513  -0.4707   2.1135  11.9949 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)   
+## (Intercept)       0.06367    2.18559   0.029   0.9768   
+## stateanx          0.03750    0.06062   0.619   0.5368   
+## epiNeur          -0.14765    0.18869  -0.782   0.4347   
+*## stateanx:epiNeur  0.01528    0.00466   3.279   0.0012 **
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.12 on 227 degrees of freedom
+## Multiple R-squared:  0.4978,	Adjusted R-squared:  0.4912 
+## F-statistic: 75.02 on 3 and 227 DF,  p-value: &lt; 2.2e-16
+```
+
+---
+# Interpreting the coefficients
+
+
+```r
+coef(int_model)
+```
+
+```
+##      (Intercept)         stateanx          epiNeur stateanx:epiNeur 
+##       0.06367327       0.03750035      -0.14764857       0.01527977
+```
+
+The coefficients tell you what the effect of a 1 unit increase in the variable has on the dependent variable.
+
+The coefficients of the main effects (`stateanx` and `epiNeur`) are hard to interpret *in the presence of an interaction* unless the variables have been **mean-centred**. 
+
+---
+# Simple slopes
+
+.pull-left[
+The `interact_plot()` function from the `interactions` package provides a nice way to visualize this interaction.
+
+
+```r
+interact_plot(int_model,
+              pred = stateanx,
+              modx = epiNeur)
+```
+]
+.pull-right[
+![](Week-28-Moderation-Mediation_files/figure-html/simp-slope-1.png)
+]
+
+---
+# Simple slopes
+
+.pull-left[
+We can also add individual data points using `plot.points = TRUE`.
+
+Confidence intervals can be added using `interval = TRUE`.
+
+
+```r
+interact_plot(int_model,
+              pred = stateanx,
+              modx = epiNeur,
+              plot.points = TRUE,
+              interval = TRUE)
+```
+]
+.pull-right[
+![](Week-28-Moderation-Mediation_files/figure-html/simp-points-1.png)
+]
+
+
+---
+# Simple slopes
+
+The interaction means that the *slope* of the effect of `stateanx` differs at different values of `epiNeur`.
+
+We can use the `sim_slopes()` function from `interactions` to statistically explore how `stateanx` varies as a function of `epiNeur`.
+
+
+```r
+sim_slopes(int_model,
+           pred = stateanx,
+           modx = epiNeur,
+           johnson_neyman = FALSE)
+```
+
+---
+
+
+```
+## SIMPLE SLOPES ANALYSIS 
+## 
+## Slope of stateanx when epiNeur =  5.51 (- 1 SD): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.12   0.04     3.09   0.00
+## 
+## Slope of stateanx when epiNeur = 10.41 (Mean): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.20   0.03     7.09   0.00
+## 
+## Slope of stateanx when epiNeur = 15.31 (+ 1 SD): 
+## 
+##   Est.   S.E.   t val.      p
+## ------ ------ -------- ------
+##   0.27   0.03     8.46   0.00
+```
+
+The slope of `stateanx` *increases* as `epiNeur` increases.
+
+---
+# Johnson-Neyman plots
+
+
+```r
+johnson_neyman(int_model, pred = stateanx, modx = epiNeur)
+```
+
+```
+## JOHNSON-NEYMAN INTERVAL 
+## 
+## When epiNeur is OUTSIDE the interval [-24.37, 3.54], the slope of stateanx
+## is p &lt; .05.
+## 
+## Note: The range of observed values of epiNeur is [0.00, 23.00]
+```
+
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+---
+# Moderation with the `psych` package
+
+The function `mediate()` from the `psych` package can also be used to run moderation analyes.
+
+.center[
+
+```r
+psych_mod &lt;- mediate(bdi ~ stateanx * epiNeur,
+                     data = epi.bfi)
+```
+
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+
+---
+# Moderation with the `psych` package
+
+
+```r
+psych_mod
+```
+
+```
+## 
+## Mediation/Moderation Analysis 
+## Call: mediate(y = bdi ~ stateanx * epiNeur, data = epi.bfi)
+## 
+## The DV (Y) was  bdi . The IV (X) was  stateanx epiNeur stateanx*epiNeur . The mediating variable(s) =  .
+##  DV =  bdi 
+##                  slope   se    t       p
+## stateanx          0.20 0.03 7.11 1.5e-11
+## epiNeur           0.46 0.06 7.21 8.0e-12
+## stateanx*epiNeur  0.02 0.00 3.29 1.2e-03
+## 
+## With R2 =  NA
+## R = NA R2 = NA   F = NA on 3 and 228 DF   p-value:  NA
+```
+
+---
+# Moderation with the `medmod` package
+
+We could also use the `mod()` function from `medmod`, which has rather nicer output than the `mediate()` function.
+
+
+```r
+mod(epi.bfi, dep = "bdi", mod = "epiNeur", pred = "stateanx")
+```
+
+```
+## 
+##  MODERATION
+## 
+##  Moderation Estimates                                          
+##  ------------------------------------------------------------- 
+##                        Estimate    SE         Z       p        
+##  ------------------------------------------------------------- 
+##    stateanx              0.1966    0.02378    8.27    &lt; .001   
+##    epiNeur               0.4612    0.05496    8.39    &lt; .001   
+##    stateanx:epiNeur      0.0153    0.00458    3.33    &lt; .001   
+##  -------------------------------------------------------------
+```
+
+---
+class: inverse, center, middle
+# First exercise
+
+---
+class: inverse, center, middle
+# Mediation
+
+---
+# Mediation
+
+Mediation refers to a situation in which the effect of a predictor is transmitted *through* another variable.
+
+.center[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+]
+
+---
+# Mediation path diagram
+
+.pull-left[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+`\(a\)` - the effect of the IV on the mediator
+
+`\(b\)` - the effect of the mediator on the DV
+
+`\(c'\)` - the *direct* effect of the IV on the DV 
+
+What's missing is *c* - the *total* effect of the IV on the DV.
+]
+
+
+---
+# Mediation
+
+In this example, *room temperature* predicts the *amount that people drink*; specifically, we'd expect that higher temperatures would increase drinking.
+
+.center[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+]
+
+---
+# Mediation
+
+Nevertheless, it's possible that higher temperatures increase drinking *indirectly*: higher temperatures make people feel more *thirsty*, which in turn makes them *drink more*.
+
+.center[
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+]
+
+
+---
+# Mediation as regression
+
+A mediation analysis is all about splitting up the effect of the predictor into *direct* and *indirect* components. Baron &amp; Kenny (1986) outline 3 steps to do this with regression.
+
+###Step 1:
+
+Does the IV predict the DV? (contrary to popular belief, doesn't have to be significant)
+
+--
+###Step 2:
+
+Does the mediator predict the DV? (this needs to be significant)
+
+--
+###Step 3:
+
+Does having the mediator in the model reduce the effect of the IV on the DV?
+
+
+---
+# The `estress` data
+
+
+```r
+head(estress)
+```
+
+```
+## # A tibble: 6 x 7
+##   tenure estress affect withdraw   sex   age   ese
+##    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1  1.67      6     2.6      3        1    51  5.33
+## 2  0.580     5     1        1        0    45  6.05
+## 3  0.580     5.5   2.4      3.66     1    42  5.26
+## 4  2         3     1.16     4.66     1    50  4.35
+## 5  5         4.5   1        4.33     1    48  4.86
+## 6  9         6     1.5      3        1    48  5.05
+```
+
+---
+# Mediation as regression (Step 1)
+
+
+```r
+summary(lm(withdraw ~ estress, data = estress))
+```
+
+```
+## 
+## Call:
+## lm(formula = withdraw ~ estress, data = estress)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.4547 -1.2302 -0.2022  0.7978  4.8820 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.06187    0.26202   7.869 9.64e-14 ***
+*## estress      0.05612    0.05421   1.035    0.302    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.247 on 260 degrees of freedom
+## Multiple R-squared:  0.004105,	Adjusted R-squared:  0.0002748 
+## F-statistic: 1.072 on 1 and 260 DF,  p-value: 0.3015
+```
+
+---
+# Mediation as regression (Step 2)
+
+
+```r
+summary(lm(affect ~ estress, data = estress))
+```
+
+```
+## 
+## Call:
+## lm(formula = affect ~ estress, data = estress)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.0095 -0.4195 -0.1609  0.2498  4.0278 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.79936    0.14331   5.578 6.11e-08 ***
+*## estress      0.17288    0.02965   5.831 1.63e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.6819 on 260 degrees of freedom
+## Multiple R-squared:  0.1156,	Adjusted R-squared:  0.1122 
+## F-statistic:    34 on 1 and 260 DF,  p-value: 1.63e-08
+```
+
+---
+# Mediation as regression (Step 3)
+
+
+```r
+summary(lm(withdraw ~ estress + affect, data = estress))
+```
+
+```
+## 
+## Call:
+## lm(formula = withdraw ~ estress + affect, data = estress)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.1716 -0.9472 -0.2249  0.8490  2.9049 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  1.44706    0.25201   5.742 2.61e-08 ***
+*## estress     -0.07685    0.05239  -1.467    0.144    
+## affect       0.76913    0.10306   7.463 1.29e-12 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.133 on 259 degrees of freedom
+## Multiple R-squared:  0.1804,	Adjusted R-squared:  0.174 
+## F-statistic: 28.49 on 2 and 259 DF,  p-value: 6.528e-12
+```
+
+---
+# And...?
+
+`estress` wasn't a significant a predictor of `withdraw`, but was a significant predictor of `affect`.
+
+`affect` was a signficant predictor of `withdraw`.
+
+Modelling `withdraw` as a function of `estress` and `affect` changed the coefficient of `estress`.
+
+The *indirect* effect of `estress` is the the coefficient of `estress` from Step 1 - the coefficent of `estress` from Step 3.
+
+---
+# Mediation model 
+
+We can use the `mediate()` function from the `psych` package to add a mediating variable. **Importantly,** we place `()` around the mediator.
+
+.pull-left[
+
+```r
+medi_model &lt;- mediate(withdraw ~ estress + (affect), data = estress)
+```
+
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+The difference between `\(c'\)` and `\(c\)` is the *indirect* effect of `estress`.
+
+When `estress` increases by 1, `affect` increases by .17; and when `affect` increases by 1, `withdraw` increases by .77.
+
+So the *indirect effect* of `estress` is around **.14**.
+]
+---
+
+
+```
+## Call: mediate(y = withdraw ~ estress + (affect), data = estress)
+## 
+## Direct effect estimates (traditional regression)    (c') 
+##           withdraw   se     t  df     Prob
+## Intercept     1.45 0.25  5.74 259 2.61e-08
+## estress      -0.08 0.05 -1.47 259 1.44e-01
+## affect        0.77 0.10  7.46 259 1.29e-12
+## 
+## R = 0.42 R2 = 0.18   F = 28.49 on 2 and 259 DF   p-value:  6.53e-12 
+## 
+##  Total effect estimates (c) 
+##         withdraw   se    t  df  Prob
+## estress     0.06 0.05 1.04 261 0.301
+## 
+##  'a'  effect estimates 
+##           affect   se    t  df     Prob
+## Intercept   0.80 0.14 5.58 260 6.11e-08
+## estress     0.17 0.03 5.83 260 1.63e-08
+## 
+##  'b'  effect estimates 
+##        withdraw  se    t  df     Prob
+## affect     0.77 0.1 7.48 260 1.17e-12
+## 
+##  'ab'  effect estimates (through mediators)
+##         withdraw boot   sd lower upper
+## estress     0.13 0.13 0.03  0.07   0.2
+```
+
+---
+# Mediation with `med()` from `medmod`
+
+
+```r
+med_model &lt;- med(data = estress, dep = "withdraw", pred = "estress", med = "affect", paths = TRUE, estPlot = TRUE)
+med_model$med
+```
+
+```
+## 
+##  Mediation Estimates                                   
+##  ----------------------------------------------------- 
+##    Effect      Estimate    SE        Z        p        
+##  ----------------------------------------------------- 
+##    Indirect      0.1330    0.0288     4.62    &lt; .001   
+##    Direct       -0.0768    0.0521    -1.48     0.140   
+##    Total         0.0561    0.0540     1.04     0.299   
+##  -----------------------------------------------------
+```
+
+---
+# Mediation with `med()` from `medmod`
+
+
+```r
+med_model$paths
+```
+
+```
+## 
+##  Path Estimates                                                        
+##  --------------------------------------------------------------------- 
+##                                Estimate    SE        Z        p        
+##  --------------------------------------------------------------------- 
+##    estress    &lt;U+2192&gt;    affect        0.1729    0.0295     5.85    &lt; .001   
+##    affect     &lt;U+2192&gt;    withdraw      0.7691    0.1025     7.51    &lt; .001   
+##    estress    &lt;U+2192&gt;    withdraw     -0.0768    0.0521    -1.48     0.140   
+##  ---------------------------------------------------------------------
+```
+
+
+---
+# Mediation with `med()` from `medmod`
+
+.pull-left[
+
+```r
+med_model$estPlot
+```
+
+```
+## Scale for 'colour' is already present. Adding another scale for 'colour',
+## which will replace the existing scale.
+```
+
+![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+As long as the confidence intervals don't overlap 0 for the indirect effect, we have a significant mediation.
+]
+
+---
+class: inverse, center, middle
+# Second exercise
+
+---
+# Further reading
+
+Baron, R. M., &amp; Kenny, D. A. (1986). The moderator–mediator variable distinction in social psychological research: Conceptual, strategic, and statistical considerations. *Journal of Personality and Social Psychology, 5, 1173-1182.*
+
+Shrout, P. E., &amp; Bolger, N. (2002). Mediation in experimental and nonexperimental studies: new procedures and recommendations. *Psychological Methods, 7, 422-445.*
+
+Hayes AF. Introduction to mediation, moderation, and conditional process analysis: a regression-based approach. New York: Guilford Press; 2013.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="js/macros.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
