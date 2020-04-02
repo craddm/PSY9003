@@ -49,7 +49,7 @@ X2 <- rnorm(300)
 ![](`r knitr::fig_chunk("examp-lm", "png")`)
 ]
 .pull-right[
-```{r echo = FALSE}
+```{r echo = FALSE, fig.height=5}
 openplotmat(asp = 1)
 textrect(c(.1, .5), .1, lab = "X")
 textrect(c(.9, .5), .1, lab = "Y")
@@ -203,7 +203,7 @@ The slope of `stateanx` *increases* as `epiNeur` increases.
 ---
 # Johnson-Neyman plots
 
-```{r fig.height=4, fig.width = 6}
+```{r fig.height=4, fig.width = 6, message = FALSE}
 johnson_neyman(int_model, pred = stateanx, modx = epiNeur)
 ```
 
