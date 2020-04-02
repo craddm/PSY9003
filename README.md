@@ -13,3 +13,5 @@ Class consist of two-hour sessions which are a mixture of lectures and practical
 [Week 26 - Logistic regression](Week-26-generalized-linear-models.html)
 
 [Week 27 - Multilevel models](Week-27-multilevel-modelling.html)
+
+[Week 28 - Moderation and mediation](Week-28-Moderation-Mediation.html)
