@@ -396,7 +396,7 @@ Mediation refers to a situation in which the effect of a predictor is transmitte
 
 `\(c'\)` - the *direct* effect of the IV on the DV 
 
-What's missing is *c* - the *total* effect of the IV on the DV.
+What's missing is `\(c\)` - the *total* effect of the IV on the DV - and `\(ab\)` - the *indirect* effect of the IV on the DV
 ]
 
 
@@ -550,13 +550,15 @@ summary(lm(withdraw ~ estress + affect, data = estress))
 ---
 # And...?
 
-`estress` wasn't a significant a predictor of `withdraw`, but was a significant predictor of `affect`.
+`estress` wasn't a significant predictor of `withdraw`, but was a significant predictor of `affect`.
 
 `affect` was a signficant predictor of `withdraw`.
 
 Modelling `withdraw` as a function of `estress` and `affect` changed the coefficient of `estress`.
 
-The *indirect* effect of `estress` is the the coefficient of `estress` from Step 1 - the coefficent of `estress` from Step 3.
+Thus, we have evidence of mediation. How much mediation? For that we need the *indirect* effect.
+
+The *indirect* effect of `estress` is the coefficient of `estress` from Step 1 MINUS the coefficent of `estress` from Step 3.
 
 ---
 # Mediation model 
@@ -615,7 +617,9 @@ So the *indirect effect* of `estress` is around **.14**.
 
 
 ```r
-med_model &lt;- med(data = estress, dep = "withdraw", pred = "estress", med = "affect", paths = TRUE, estPlot = TRUE)
+med_model &lt;- med(data = estress, dep = "withdraw",
+                 pred = "estress", med = "affect",
+                 paths = TRUE, estPlot = TRUE)
 med_model$med
 ```
 
@@ -651,6 +655,7 @@ med_model$paths
 ##  ---------------------------------------------------------------------
 ```
 
+PS this output looks better direct from R...!
 
 ---
 # Mediation with `med()` from `medmod`
@@ -659,11 +664,6 @@ med_model$paths
 
 ```r
 med_model$estPlot
-```
-
-```
-## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.
 ```
 
 ![](Week-28-Moderation-Mediation_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
@@ -675,6 +675,7 @@ As long as the confidence intervals don't overlap 0 for the indirect effect, we 
 ---
 class: inverse, center, middle
 # Second exercise
+
 
 ---
 # Further reading

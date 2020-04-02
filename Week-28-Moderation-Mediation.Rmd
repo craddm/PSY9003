@@ -270,7 +270,7 @@ $b$ - the effect of the mediator on the DV
 
 $c'$ - the *direct* effect of the IV on the DV 
 
-What's missing is *c* - the *total* effect of the IV on the DV.
+What's missing is $c$ - the *total* effect of the IV on the DV - and $ab$ - the *indirect* effect of the IV on the DV
 ]
 
 
@@ -280,11 +280,11 @@ What's missing is *c* - the *total* effect of the IV on the DV.
 In this example, *room temperature* predicts the *amount that people drink*; specifically, we'd expect that higher temperatures would increase drinking.
 
 .center[
-```{r echo = FALSE, fig.height = 5}
+```{r echo = FALSE}
 openplotmat(asp = 1)
-textrect(c(.1, .5), .1, lab = "Room temp", radx = .2)
-textrect(c(.9, .5), .1, lab = "Amount drunk", radx = .2)
-straightarrow(c(.2, .5), c(.8, .5))
+textrect(c(.1, .5), radx = .15, lab = "Room temp")
+textrect(c(.9, .5), radx = .15, lab = "Amount drunk")
+straightarrow(c(.25, .5), c(.75, .5))
 ```
 ]
 
@@ -355,13 +355,15 @@ summary(lm(withdraw ~ estress + affect, data = estress))
 ---
 # And...?
 
-`estress` wasn't a significant a predictor of `withdraw`, but was a significant predictor of `affect`.
+`estress` wasn't a significant predictor of `withdraw`, but was a significant predictor of `affect`.
 
 `affect` was a signficant predictor of `withdraw`.
 
 Modelling `withdraw` as a function of `estress` and `affect` changed the coefficient of `estress`.
 
-The *indirect* effect of `estress` is the the coefficient of `estress` from Step 1 - the coefficent of `estress` from Step 3.
+Thus, we have evidence of mediation. How much mediation? For that we need the *indirect* effect.
+
+The *indirect* effect of `estress` is the coefficient of `estress` from Step 1 MINUS the coefficent of `estress` from Step 3.
 
 ---
 # Mediation model 
@@ -390,7 +392,9 @@ summary(medi_model)
 # Mediation with `med()` from `medmod`
 
 ```{r}
-med_model <- med(data = estress, dep = "withdraw", pred = "estress", med = "affect", paths = TRUE, estPlot = TRUE)
+med_model <- med(data = estress, dep = "withdraw",
+                 pred = "estress", med = "affect",
+                 paths = TRUE, estPlot = TRUE)
 med_model$med
 ```
 
@@ -401,12 +405,13 @@ med_model$med
 med_model$paths
 ```
 
+PS this output looks better direct from R...!
 
 ---
 # Mediation with `med()` from `medmod`
 
 .pull-left[
-```{r}
+```{r message = FALSE, fig.height = 5}
 med_model$estPlot
 ```
 ]
@@ -417,6 +422,7 @@ As long as the confidence intervals don't overlap 0 for the indirect effect, we 
 ---
 class: inverse, center, middle
 # Second exercise
+
 
 ---
 # Further reading
