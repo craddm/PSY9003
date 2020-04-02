@@ -342,7 +342,7 @@ summary(lm(withdraw ~ estress, data = estress))
 # Mediation as regression (Step 2)
 
 ```{r highlight.output = 12}
-summary(lm(affect ~ estress, data = estress))
+summary(lm(withdraw ~ affect, data = estress))
 ```
 
 ---
@@ -353,17 +353,20 @@ summary(lm(withdraw ~ estress + affect, data = estress))
 ```
 
 ---
-# And...?
+# Is there mediation?
 
+**Step 1:**
 `estress` wasn't a significant predictor of `withdraw`, but was a significant predictor of `affect`.
 
-`affect` was a signficant predictor of `withdraw`.
+**Step 2:**
+`affect` was a significant predictor of `withdraw`.
 
+**Step 3:**
 Modelling `withdraw` as a function of `estress` and `affect` changed the coefficient of `estress`.
 
 Thus, we have evidence of mediation. How much mediation? For that we need the *indirect* effect.
 
-The *indirect* effect of `estress` is the coefficient of `estress` from Step 1 MINUS the coefficent of `estress` from Step 3.
+The *indirect* effect of `estress` is the coefficient of `estress` from Step 1 MINUS the coefficient of `estress` from Step 3.
 
 ---
 # Mediation model 
