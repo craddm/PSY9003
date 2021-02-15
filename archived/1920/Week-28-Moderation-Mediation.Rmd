@@ -1,0 +1,446 @@
+---
+title: "Moderation and Mediation"
+subtitle: "PSY9003"
+date: "2020/03/31"
+output:
+  xaringan::moon_reader:
+    css: ["default", "default-fonts", "css/my-theme.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+      beforeInit: "js/macros.js"
+---
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(tidyverse)
+#library(DiagrammeR)
+library(diagram)
+library(psych)
+library(psychTools)
+library(ggdag)
+library(medmod)
+library(interactions)
+library(processR)
+data(epi.bfi)
+#data(Tal_Or)
+estress <- read_csv("data/estress.csv")
+```
+
+# Mediation and moderation
+
+In linear regression, we're looking to understand the relationship between 
+*predictors* and *outcomes*.
+.pull-left[
+```{r examp-lm, echo = FALSE, fig.height = 5, message = FALSE, fig.width= 6, fig.show = "hide"}
+set.seed(200)
+theme_set(theme_bw())
+a <- rnorm(300)
+X <- rnorm(300)
+Y <- a + X * 0.5 + 0.5 * rnorm(300)
+qplot(X, Y) +
+  theme(text = element_text(size = 18)) + 
+  stat_smooth(method = "lm")
+X1 <- rnorm(300)
+X2 <- rnorm(300)
+```
+![](`r knitr::fig_chunk("examp-lm", "png")`)
+]
+.pull-right[
+```{r echo = FALSE, fig.height=5}
+openplotmat(asp = 1)
+textrect(c(.1, .5), .1, lab = "X")
+textrect(c(.9, .5), .1, lab = "Y")
+straightarrow(c(.2, .5), c(.8, .5))
+```
+]
+
+---
+class: inverse, center, middle
+# Moderation
+
+---
+# Moderation 
+
+Moderation changes the strength of the relationship between the predictor and dependent variable. 
+.center[
+```{r mod-dia, echo = FALSE, fig.height = 4, eval = FALSE}
+pmacroModel(1)
+```
+
+![](images/moderation_plot.png)
+]
+
+---
+# Moderation
+.center[
+```{r echo = FALSE}
+statisticalDiagram(1)
+```
+]
+
+---
+# The *epi.bfi* dataset
+
+The `epi.bfi` dataset from the `psychTools` package
+
+```{r}
+head(epi.bfi)
+```
+
+---
+# Simple linear regression
+
+Suppose that we want to model `bdi` (Beck Depression Inventory) as a function of `stateanx` (State Anxiety)
+
+```{r}
+st_bdi <- lm(bdi ~ stateanx, data = epi.bfi)
+summary(st_bdi)
+```
+
+---
+# Multiple linear regression
+
+An additional predictor that we may find interesting is `epiNeur` - a measure of *neuroticism* from the *Eysenck Personality Inventory*. We can add this to make a *multiple* regression model.
+
+```{r}
+st_neu <- lm(bdi ~ stateanx + epiNeur, data = epi.bfi)
+summary(st_neu)
+```
+
+---
+# Adding interaction terms
+
+What if the effect of `stateanx` depends on the level of `epiNeur`? For example, people who score high on *neuroticism* might be more affected by *state anxiety* than people who are low on *neuroticism*. 
+
+We add both main effects and interactions by using `*` instead of `+`
+
+Thus, `stateanx * epiNeur` will give us the main effect of `stateanx`, the main effect of `epiNeur`, and the interaction between the two.
+
+```{r}
+int_model <- lm(bdi ~ stateanx * epiNeur, data = epi.bfi)
+```
+
+---
+
+```{r highlight.output=14}
+summary(int_model)
+```
+
+---
+# Interpreting the coefficients
+
+```{r}
+coef(int_model)
+```
+
+The coefficients tell you what the effect of a 1 unit increase in the variable has on the dependent variable.
+
+The coefficients of the main effects (`stateanx` and `epiNeur`) are hard to interpret *in the presence of an interaction* unless the variables have been **mean-centred**. 
+
+---
+# Simple slopes
+
+.pull-left[
+The `interact_plot()` function from the `interactions` package provides a nice way to visualize this interaction.
+
+```{r simp-slope, fig.height=5, fig.show = "hide"}
+interact_plot(int_model,
+              pred = stateanx,
+              modx = epiNeur)
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk("simp-slope", "png")`)
+]
+
+---
+# Simple slopes
+
+.pull-left[
+We can also add individual data points using `plot.points = TRUE`.
+
+Confidence intervals can be added using `interval = TRUE`.
+
+```{r simp-points, fig.height=5, fig.show = "hide"}
+interact_plot(int_model,
+              pred = stateanx,
+              modx = epiNeur,
+              plot.points = TRUE,
+              interval = TRUE)
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk("simp-points", "png")`)
+]
+
+
+---
+# Simple slopes
+
+The interaction means that the *slope* of the effect of `stateanx` differs at different values of `epiNeur`.
+
+We can use the `sim_slopes()` function from `interactions` to statistically explore how `stateanx` varies as a function of `epiNeur`.
+
+```{r eval = FALSE}
+sim_slopes(int_model,
+           pred = stateanx,
+           modx = epiNeur,
+           johnson_neyman = FALSE)
+```
+
+---
+
+```{r echo = FALSE}
+sim_slopes(int_model,
+           pred = stateanx,
+           modx = epiNeur,
+           johnson_neyman = FALSE)
+```
+
+The slope of `stateanx` *increases* as `epiNeur` increases.
+
+---
+# Johnson-Neyman plots
+
+```{r fig.height=4, fig.width = 6, message = FALSE, fig.show = "hide"}
+johnson_neyman(int_model, pred = stateanx, modx = epiNeur)
+```
+![](images/j_m_plot.png)
+
+---
+# Moderation with the `psych` package
+
+The function `mediate()` from the `psych` package can also be used to run moderation analyes.
+
+
+```{r fig.show = "hide"}
+psych_mod <- mediate(bdi ~ stateanx * epiNeur,
+                     data = epi.bfi)
+```
+.center[
+![](images/moderation_model.png)
+]
+
+---
+# Moderation with the `psych` package
+
+```{r}
+psych_mod
+```
+
+---
+# Moderation with the `medmod` package
+
+We could also use the `mod()` function from `medmod`, which has rather nicer output than the `mediate()` function.
+
+```{r}
+mod(epi.bfi, dep = "bdi", mod = "epiNeur", pred = "stateanx")
+```
+
+---
+class: inverse, center, middle
+# First exercise
+
+---
+class: inverse, center, middle
+# Mediation
+
+---
+# Mediation
+
+Mediation refers to a situation in which the effect of a predictor is transmitted *through* another variable.
+
+```{r echo = FALSE, fig.show = "hide"}
+pmacroModel(4,
+            radx = .1)
+```
+.center[
+![](images/mediation_model.png)
+]
+
+---
+# Mediation path diagram
+
+.pull-left[
+```{r echo = FALSE}
+statisticalDiagram(4)
+```
+]
+.pull-right[
+$a$ - the effect of the IV on the mediator
+
+$b$ - the effect of the mediator on the DV
+
+$c'$ - the *direct* effect of the IV on the DV 
+
+What's missing is $c$ - the *total* effect of the IV on the DV - and $ab$ - the *indirect* effect of the IV on the DV
+]
+
+
+---
+# Mediation
+
+In this example, *room temperature* predicts the *amount that people drink*; specifically, we'd expect that higher temperatures would increase drinking.
+
+.center[
+```{r echo = FALSE, fig.show = "hide"}
+openplotmat(asp = 1)
+textrect(c(.1, .5), radx = .15, lab = "Room temp")
+textrect(c(.9, .5), radx = .15, lab = "Amount drunk")
+straightarrow(c(.25, .5), c(.75, .5))
+```
+![](images/temp_drunk.png)
+]
+
+---
+# Mediation
+
+Nevertheless, it's possible that higher temperatures increase drinking *indirectly*: higher temperatures make people feel more *thirsty*, which in turn makes them *drink more*.
+
+.center[
+```{r echo = FALSE, fig.show = "hide"}
+pmacroModel(4,
+            labels = list(X = "Room temp",
+                          Mi = "Thirst",
+                          Y = "Amount drunk"),
+            radx = .1)
+```
+![](images/temp_medi.png)
+]
+
+
+---
+# Mediation as regression
+
+A mediation analysis is all about splitting up the effect of the predictor into *direct* and *indirect* components. Baron & Kenny (1986) outline 3 steps to do this with regression.
+
+###Step 1:
+
+Does the IV predict the DV? (contrary to popular belief, doesn't have to be significant)
+
+--
+###Step 2:
+
+Does the mediator predict the DV? (this needs to be significant)
+
+--
+###Step 3:
+
+Does having the mediator in the model reduce the effect of the IV on the DV?
+
+
+---
+# The `estress` data
+
+```{r}
+head(estress)
+```
+
+---
+# Mediation as regression (Step 1)
+
+```{r highlight.output = 12}
+summary(lm(withdraw ~ estress, data = estress))
+```
+
+---
+# Mediation as regression (Step 2)
+
+```{r highlight.output = 12}
+summary(lm(withdraw ~ affect, data = estress))
+```
+
+---
+# Mediation as regression (Step 3)
+
+```{r highlight.output = 12}
+summary(lm(withdraw ~ estress + affect, data = estress))
+```
+
+---
+# Is there mediation?
+
+**Step 1:**
+`estress` wasn't a significant predictor of `withdraw`, but was a significant predictor of `affect`.
+
+**Step 2:**
+`affect` was a significant predictor of `withdraw`.
+
+**Step 3:**
+Modelling `withdraw` as a function of `estress` and `affect` changed the coefficient of `estress`.
+
+Thus, we have evidence of mediation. How much mediation? For that we need the *indirect* effect.
+
+The *indirect* effect of `estress` is the coefficient of `estress` from Step 1 MINUS the coefficient of `estress` from Step 3.
+
+---
+# Mediation model 
+
+We can use the `mediate()` function from the `psych` package to add a mediating variable. **Importantly,** we place `()` around the mediator.
+
+.pull-left[
+```{r fig.show = "hide"}
+medi_model <- mediate(withdraw ~ estress + (affect), data = estress)
+```
+![](images/temp_medi_out.png)
+]
+.pull-right[
+The difference between $c'$ and $c$ is the *indirect* effect of `estress`.
+
+When `estress` increases by 1, `affect` increases by .17; and when `affect` increases by 1, `withdraw` increases by .77.
+
+So the *indirect effect* of `estress` is around **.14**.
+]
+---
+
+```{r echo = FALSE}
+summary(medi_model)
+```
+
+---
+# Mediation with `med()` from `medmod`
+
+```{r}
+med_model <- med(data = estress, dep = "withdraw",
+                 pred = "estress", med = "affect",
+                 paths = TRUE, estPlot = TRUE)
+med_model$med
+```
+
+---
+# Mediation with `med()` from `medmod`
+
+```{r}
+med_model$paths
+```
+
+PS this output looks better direct from R...!
+
+---
+# Mediation with `med()` from `medmod`
+
+.pull-left[
+```{r message = FALSE, fig.height = 5}
+med_model$estPlot
+```
+]
+.pull-right[
+As long as the confidence intervals don't overlap 0 for the indirect effect, we have a significant mediation.
+]
+
+---
+class: inverse, center, middle
+# Second exercise
+
+
+---
+# Further reading
+
+Baron, R. M., & Kenny, D. A. (1986). The moderator–mediator variable distinction in social psychological research: Conceptual, strategic, and statistical considerations. *Journal of Personality and Social Psychology, 5, 1173-1182.*
+
+Shrout, P. E., & Bolger, N. (2002). Mediation in experimental and nonexperimental studies: new procedures and recommendations. *Psychological Methods, 7, 422-445.*
+
+Hayes AF. Introduction to mediation, moderation, and conditional process analysis: a regression-based approach. New York: Guilford Press; 2013.
